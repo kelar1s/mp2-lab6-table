@@ -11,13 +11,6 @@ int main() {
 	table.Insert(Record<int, std::string>(4, "Bato"));
 	table.Insert(Record<int, std::string>(5, "Zhargal"));
 	table.Insert(Record<int, std::string>(8, "Ayuna"));
-	for (int i = 0; i < 10; i += 2) {
-		if (table.Find(i)) {
-			std::cout << i << " exists in the table" << std::endl;
-		}
-		else {
-			std::cout << i << " does not exist in the table" << std::endl;
-		}
-	}
+	std::cout << table;
 	return 0;
 }

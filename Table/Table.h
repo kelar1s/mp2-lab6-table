@@ -37,7 +37,7 @@ public:
     virtual TKey GetCurrKey() = 0;
     virtual TVal GetCurrVal() = 0;
 
-    friend std::ostream& operator<<(std::ostream& out, const Table<TKey, TVal>& table)
+    friend std::ostream& operator<<(std::ostream& out, Table<TKey, TVal>& table)
     {
         for (table.Reset(); !table.IsEnd(); table.GoNext())
         {
