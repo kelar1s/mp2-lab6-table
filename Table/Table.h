@@ -13,7 +13,7 @@ public:
     virtual ~Table() {};
 
     int GetDataCount() {
-        return dataCount
+        return dataCount;
     }
 
     int GetEff() {

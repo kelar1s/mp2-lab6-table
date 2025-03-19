@@ -11,7 +11,7 @@ public:
     Record() : key(), val() {}
     friend std::ostream& operator<<(std::ostream& out, const Record<TKey, TVal>& rec)
     {
-        out << rec.key << ":" << rec.val;
+        out << rec.key << " : " << rec.val;
         return out;
     }
 };

@@ -65,5 +65,60 @@ public:
 		}
 		return this->pRecord[this->currentIndex].val;
 	}
+
+	void SelectSort() { // i - начиная с какого ищем минимальный - j для поиска в оставшейся части
+		int i = 0, j = 0;
+		while (i < dataCount) {
+			eff++;
+			j = i;
+			int k = i; // индекс минимального
+			int minik = pRecord[i].key;
+			while (j < dataCount) {
+				if (pRecord[j].key < minik) {
+					minik = pRecord[j].key;
+					k = j;
+				}
+				j++;
+			}
+			Record<TKey, TVal> tmp = pRecord[i];
+			pRecord[i] = pRecord[k];
+			pRecord[k] = tmp;
+			i++;
+		}
+	}
+
+	void QuickSort() {
+		QSortRec(0, dataCount - 1);
+	}
+
+	void QSortRec(int start, int finish) {
+		if (start >= finish) {
+			return;
+		}
+		int left = start, right = finish;
+		Record<TKey, TVal> pivot = pRecord[(start + finish) / 2];
+
+		while (left <= right) {
+			while (pRecord[left].key < pivot.key) {
+				left++;
+			}
+			while (pRecord[right].key > pivot.key) {
+				right--;
+			}
+			if (left <= right) {
+				Record<TKey, TVal> temp = pRecord[left];
+				pRecord[left] = pRecord[right];
+				pRecord[right] = temp;
+				left++;
+				right--;
+			}
+		}
+		if (start < right) {
+			QSortRec(start, right);
+		}
+		if (left < finish) {
+			QSortRec(left, finish);
+		}
+	}
 };
 
