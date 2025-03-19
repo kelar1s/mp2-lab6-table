@@ -12,10 +12,17 @@ public:
     Table() : dataCount(0), eff(0) {};
     virtual ~Table() {};
 
-    int GetDataCount();
-    int GetEff();
+    int GetDataCount() {
+        return dataCount
+    }
 
-    void ClearEff();
+    int GetEff() {
+        return eff;
+    }
+
+    void ClearEff() {
+        eff = 0;
+    }
 
     bool IsEmpty() const {
         if (dataCount == 0)

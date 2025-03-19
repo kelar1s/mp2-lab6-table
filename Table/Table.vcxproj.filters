@@ -27,6 +27,9 @@
     <ClInclude Include="ScanTable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="SortTable.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sample.cpp">
