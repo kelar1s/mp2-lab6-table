@@ -6,7 +6,7 @@ class ArrayHashTable : public HashTable<TKey, TVal> {
 protected:
 	Record<TKey, TVal>* pRec;
 	int step, currentIndex;
-	Record<TKey, TVal> free, del;
+	int free, del;
 public:
 	ArrayHashTable(int _size = 10, int _step = 17) {
 		eff = 0;
@@ -62,5 +62,33 @@ public:
 		return false;
 	}
 
+	void Insert(Record<TKey, TVal> rec) {
+		if (Find(rec.key)) {
+			throw - 1;
+		}
+		eff++;
+		pRec[currentIndex] = rec;
+		dataCount++;
+	}
+
+	void Delete(TKey key) {
+		if (!Find(rec.key)) {
+			throw -1;
+		}
+		pRec[currentIndex] = del;
+		dataCount--;
+	}
+
+	Record<TKey, TVal> GetCurr() {
+		return pRec[currentIndex];
+	}
+
+	TKey GetCurrKey() {
+		return pRec[currentIndex].key;
+	}
+
+	TVal GetCurrVal() {
+		return pRec[currentIndex].val;
+	}
 	
 };
