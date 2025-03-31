@@ -13,7 +13,7 @@ int main() {
 	table.Insert(Record<int, std::string>(3, "Dorzhi Zandakov"));
 	table.Insert(Record<int, std::string>(6, "Bato Batuevich"));
 	table.Insert(Record<int, std::string>(5, "Zhargal Shushkevich"));
-	table.Insert(Record<int, std::string>(1, "Ayuna Ledyasheva"));
+
 	std::cout << "ScanTable before sort: " << std::endl;
 	std::cout << table << std::endl;
 	table.QuickSort();
