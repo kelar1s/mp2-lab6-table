@@ -6,15 +6,15 @@ class ArrayHashTable : public HashTable<TKey, TVal> {
 protected:
 	Record<TKey, TVal>* pRec;
 	int step, currentIndex;
-	int free, del;
+	Record<TKey, TVal> free, del;
 public:
-	ArrayHashTable(int _size = 10, int _step = 17) {
+	ArrayHashTable(int _size = 100, int _step = 17) {
 		eff = 0;
 		dataCount = 0;
 		size = _size;
 		pRec = new Record<TKey, TVal>[size];
-		free = -1;
-		del = -2;
+		free.key = -1;
+		del.key = -2;
 		step = _step;
 		currentIndex = 0;
 		for (int i = 0; i < size; i++) {
@@ -62,9 +62,13 @@ public:
 		return false;
 	}
 
+	bool IsFull() {
+		return dataCount == size;
+	}
+
 	void Insert(Record<TKey, TVal> rec) {
 		if (Find(rec.key)) {
-			throw - 1;
+			throw -1;
 		}
 		eff++;
 		pRec[currentIndex] = rec;
@@ -75,6 +79,7 @@ public:
 		if (!Find(rec.key)) {
 			throw -1;
 		}
+		eff++;
 		pRec[currentIndex] = del;
 		dataCount--;
 	}
@@ -89,6 +94,26 @@ public:
 
 	TVal GetCurrVal() {
 		return pRec[currentIndex].val;
+	}
+
+	void Reset() {
+		for (int i = 0; i < size; i++) {
+			if (pRec[i] != free || pRec[i] != del) {
+				currentIndex = i;
+				break;
+			}
+		}
+	}
+
+	void GoNext() {
+		currentIndex++;
+		while (pRec[currentIndex] == free || pRec[currentIndex] == del) {
+			currentIndex++;
+		}
+	}
+
+	bool IsEnd() {
+		return currentIndex == size;
 	}
 	
 };

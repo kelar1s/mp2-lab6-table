@@ -6,6 +6,7 @@
 
 template<typename TKey, typename TVal>
 class SortTable : public ScanTable<TKey, TVal> {
+	Record<TKey, TVal>* tmpArr;
 public:
 	SortTable(int _size = 10) : ScanTable<TKey, TVal>(_size) {}
 	
@@ -55,4 +56,95 @@ public:
 		dataCount--;
 	}
 
+	void SelectSort() { // i - начиная с какого ищем минимальный - j для поиска в оставшейся части
+		int i = 0, j = 0;
+		while (i < dataCount) {
+			eff++;
+			j = i;
+			int k = i; // индекс минимального
+			int minik = pRecord[i].key;
+			while (j < dataCount) {
+				if (pRecord[j].key < minik) {
+					minik = pRecord[j].key;
+					k = j;
+				}
+				j++;
+			}
+			Record<TKey, TVal> tmp = pRecord[i];
+			pRecord[i] = pRecord[k];
+			pRecord[k] = tmp;
+			i++;
+		}
+	}
+
+	void QuickSort() {
+		QSortRec(0, dataCount - 1);
+	}
+
+	void QSortRec(int start, int finish) {
+		if (start >= finish) {
+			return;
+		}
+		int left = start, right = finish;
+		Record<TKey, TVal> pivot = pRecord[(start + finish) / 2];
+
+		while (left <= right) {
+			while (pRecord[left].key < pivot.key) {
+				left++;
+			}
+			while (pRecord[right].key > pivot.key) {
+				right--;
+			}
+			if (left <= right) {
+				Record<TKey, TVal> temp = pRecord[left];
+				pRecord[left] = pRecord[right];
+				pRecord[right] = temp;
+				left++;
+				right--;
+			}
+		}
+		if (start < right) {
+			QSortRec(start, right);
+		}
+		if (left < finish) {
+			QSortRec(left, finish);
+		}
+	}
+
+	void MergeSort(int left, int right) {
+		if (left == right) {
+			return;
+		}
+		int mid = (left + right) / 2;
+		MergeSort(left, mid);
+		MergeSort(mid + 1, right);
+		Merge(left, mid, right);
+	}
+
+	void Merge(int left, int mid, int right) {
+		int i = left, j = mid + 1, k = left;
+		while (i <= mid && j <= right) {
+			if (pRec[i].key < pRec[j].key) {
+				tmpArr[k] = pRec[i];
+				i++; k++;
+			}
+			else if (pRec[i].key > pRec[j].key) {
+				tmpArr[k] = pRec[j];
+				j++; k++;
+			}
+			else {
+				tmpArr[k] = tmpArr[k + 1] = pRec[i];
+				i++; j++; k += 2;
+			}
+		}
+		for (; i <= mid; i++, k++) {
+			tmpArr[k] = pRec[i];
+		}
+		for (; j <= right; j++, k++) {
+			tmpArr[k] = pRec[j];
+		}
+		for (int i = left; i <= right; i++) {
+			pRec[i] = tmpArr[i];
+		}
+	}
 };

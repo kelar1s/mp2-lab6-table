@@ -14,4 +14,10 @@ public:
         out << rec.key << " : " << rec.val;
         return out;
     }
+
+    bool operator==(const Record<TKey, TVal>& oth) {
+        return this->key == oth.key;
+    }
+
+    
 };
