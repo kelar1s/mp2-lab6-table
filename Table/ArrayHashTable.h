@@ -8,17 +8,15 @@ protected:
 	int step, currentIndex;
 	Record<TKey, TVal> free, del;
 public:
-	ArrayHashTable(int _size = 100, int _step = 17) {
+	ArrayHashTable(int _size = 100, int _step = 3): step(_step), currentIndex(0) {
+		size = _size;
 		eff = 0;
 		dataCount = 0;
-		size = _size;
-		pRec = new Record<TKey, TVal>[size];
 		free.key = -1;
 		del.key = -2;
-		step = _step;
-		currentIndex = 0;
+		pRec = new Record<TKey, TVal>[size];
 		for (int i = 0; i < size; i++) {
-			pRec[i].key = free;
+			pRec[i] = free;
 		}
 	}
 
@@ -27,17 +25,21 @@ public:
 		pRec = new Record<TKey, TVal>[size];
 		eff = oth.eff;
 		dataCount = oth.dataCount;
-		free = oth.free;
-		del = oth.del;
 		step = oth.step;
 		currentIndex = oth.currentIndex;
+		free = oth.free;
+		del = oth.del;
 		for (int i = 0; i < size; i++) {
 			pRec[i] = oth.pRec[i];
 		}
 	}
 
 	~ArrayHashTable() {
-		delte[] pRec;
+		delete[] pRec;
+	}
+
+	bool IsFull() const {
+		return dataCount == size;
 	}
 
 	bool Find(TKey key) {
@@ -45,10 +47,10 @@ public:
 		currentIndex = HashFunc(key);
 		for (int i = 0; i < size; i++) {
 			eff++;
-			if (pRec[currentIndex].key == free) {
+			if (pRec[currentIndex] == free) {
 				break;
 			}
-			else if (pRec[currentIndex].key == del && tmp == -1) {
+			else if (pRec[currentIndex] == del && temp == -1) {
 				temp = currentIndex;
 			}
 			else if (pRec[currentIndex].key == key) {
@@ -57,13 +59,9 @@ public:
 			currentIndex = (currentIndex + step) % size;
 		}
 		if (temp != -1) {
-			currentIndex = tmp;
+			currentIndex = temp;
 		}
 		return false;
-	}
-
-	bool IsFull() {
-		return dataCount == size;
 	}
 
 	void Insert(Record<TKey, TVal> rec) {
@@ -76,7 +74,7 @@ public:
 	}
 
 	void Delete(TKey key) {
-		if (!Find(rec.key)) {
+		if (!Find(key)) {
 			throw -1;
 		}
 		eff++;
@@ -98,7 +96,7 @@ public:
 
 	void Reset() {
 		for (int i = 0; i < size; i++) {
-			if (pRec[i] != free || pRec[i] != del) {
+			if (pRec[i] != free && pRec[i] != del) {
 				currentIndex = i;
 				break;
 			}

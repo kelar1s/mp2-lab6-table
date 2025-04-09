@@ -6,20 +6,17 @@
 template<typename TKey, typename TVal>
 class ScanTable : public ArrayTable<TKey, TVal> {
 public:
-
-	 // Временный для хранения
-
-	ScanTable(int _size) : ArrayTable<TKey, TVal>(_size) {}
+	ScanTable(int _size = 10) : ArrayTable<TKey, TVal>(_size) {}
 	
 	bool Find(TKey key) {
-		for (int i = 0; i < this->dataCount; i++) {
-			this->eff++;
-			if (key == this->pRecord[i].key) {
-				this->currentIndex = i;
+		for (Reset(); !IsEnd(); GoNext()) {
+			eff++;
+			if (GetCurrKey() == key) {
 				return true;
 			}
 		}
-		this->currentIndex = this->dataCount;
+		eff++;
+		currentIndex = dataCount;
 		return false;
 	}
 
@@ -27,47 +24,20 @@ public:
 		if (Find(record.key)) {
 			throw -1;
 		}
-		if (this->dataCount == this->size) {
+		if (dataCount == size) {
 			throw -1;
 		}
-		this->pRecord[this->currentIndex] = record;
-		this->dataCount++;
-		this->eff++;
+		pRecord[currentIndex] = record;
+		dataCount++;
+		eff++;
 	}
 
 	void Delete(TKey key) {
 		if (!Find(key)) {
 			throw -1;
 		}
-		this->pRecord[this->currentIndex] = this->pRecord[this->dataCount - 1];
-		this->dataCount--;
-		this->eff++;
+		pRecord[currentIndex] = pRecord[dataCount - 1];
+		dataCount--;
+		eff++;
 	}
-
-	bool IsFull() const override {
-		return this->dataCount == this->size;
-	}
-
-	Record<TKey, TVal> GetCurr() override {
-		if (this->currentIndex < 0 || this->currentIndex >= this->dataCount) {
-			throw -1;
-		}
-		return this->pRecord[this->currentIndex];
-	}
-
-	TKey GetCurrKey() override {
-		if (this->currentIndex < 0 || this->currentIndex >= this->dataCount) {
-			throw -1;
-		}
-		return this->pRecord[this->currentIndex].key;
-	}
-
-	TVal GetCurrVal() override {
-		if (this->currentIndex < 0 || this->currentIndex >= this->dataCount) {
-			throw -1;
-		}
-		return this->pRecord[this->currentIndex].val;
-	}
-
-	
 };

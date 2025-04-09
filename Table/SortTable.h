@@ -15,21 +15,24 @@ class SortTable : public ScanTable<TKey, TVal> {
 	Record<TKey, TVal>* tmpArr;
 public:
 	SortTable(int _size = 10) : ScanTable<TKey, TVal>(_size), tmpArr(nullptr) {}
+
 	SortTable(const ScanTable<TKey, TVal>& t, SortType st = QuickSortType ) : ScanTable<TKey, TVal>(t), tmpArr(nullptr) {
 		if (st == QuickSortType) {
 			QuickSort();
 		}
 		else if (st == MergeSortType) {
 			tmpArr = new Record<TKey, TVal>[size];
-			MergeSort(0, size - 1);
+			MergeSort(0, dataCount - 1);
 		}
 		else if (st == SelectSortType) {
 			SelectSort();
 		}
-	} 
+	}
+
 	~SortTable() {
 		delete[] tmpArr;
 	}
+
 	bool Find(TKey key) {
 		int start = 0, finish = dataCount - 1;
 		while (start <= finish) {
@@ -76,23 +79,25 @@ public:
 		dataCount--;
 	}
 
-	void SelectSort() { // i - начиная с какого ищем минимальный - j для поиска в оставшейся части
-		int i = 0, j = 0;
+private:
+
+	void SelectSort() { 
+		int i = 0, j = 0; // i - начиная с какого ищем минимальный - j для поиска в оставшейся части
 		while (i < dataCount) {
 			eff++;
 			j = i;
-			int k = i; // индекс минимального
+			int minikIndex = i;
 			int minik = pRecord[i].key;
 			while (j < dataCount) {
 				if (pRecord[j].key < minik) {
 					minik = pRecord[j].key;
-					k = j;
+					minikIndex = j;
 				}
 				j++;
 			}
 			Record<TKey, TVal> tmp = pRecord[i];
-			pRecord[i] = pRecord[k];
-			pRecord[k] = tmp;
+			pRecord[i] = pRecord[minikIndex];
+			pRecord[minikIndex] = tmp;
 			i++;
 		}
 	}
@@ -132,17 +137,17 @@ public:
 	}
 
 	void MergeSort(int left, int right) {
-		/*if (left == right) {
+		if (left == right) {
 			return;
 		}
 		int mid = (left + right) / 2;
 		MergeSort(left, mid);
 		MergeSort(mid + 1, right);
-		Merge(left, mid, right);*/
+		Merge(left, mid, right);
 	}
 
 	void Merge(int left, int mid, int right) {
-		/*int i = left, j = mid + 1, k = left;
+		int i = left, j = mid + 1, k = left;
 		while (i <= mid && j <= right) {
 			if (pRecord[i].key < pRecord[j].key) {
 				tmpArr[k] = pRecord[i];
@@ -162,14 +167,5 @@ public:
 		for (int i = left; i <= right; i++) {
 			pRecord[i] = tmpArr[i];
 		}
-		int i = left, j = mid + 1, k = left;
-		while (i <= mid && j <= right)
-		{
-			if (pRecord[i].key < pRecord[j].key) tmpArr[k++] = pRecord[i++];
-			else tmpArr[k++] = pRecord[j++];
-		}
-		if (i <= mid) while (i <= mid) tmpArr[k++] = pRecord[i++];
-		else while (j <= right) tmpArr[k++] = pRecord[j++];
-		for (i = left; i <= right; i++) pRecord[i] = tmpArr[i];*/
 	}
 };
