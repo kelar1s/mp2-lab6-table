@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{129991d2-f88d-441c-955d-6572b15536de}</ProjectGuid>
-    <RootNamespace>test</RootNamespace>
+    <ProjectGuid>{cbb79e53-ea28-4f1c-8aba-055630cb5494}</ProjectGuid>
+    <RootNamespace>Visual</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -102,7 +102,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
     </ClCompile>
     <Link>
@@ -127,14 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="gtest.h" />
+    <ClInclude Include="Visual.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gtest-all.cc" />
-    <ClCompile Include="test_ArrayHashTable.cpp" />
-    <ClCompile Include="test_main.cpp" />
-    <ClCompile Include="test_ScanTable.cpp" />
-    <ClCompile Include="test_SortTable.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Visual.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

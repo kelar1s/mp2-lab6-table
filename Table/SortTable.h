@@ -64,6 +64,7 @@ public:
 			pRecord[i] = pRecord[i - 1];
 			eff++;
 		}
+		eff++;
 		dataCount++;
 		pRecord[currentIndex] = record;
 	}

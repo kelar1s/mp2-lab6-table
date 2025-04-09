@@ -21,10 +21,7 @@ public:
 	}
 
 	void Insert(Record<TKey, TVal> record) {
-		if (Find(record.key)) {
-			throw -1;
-		}
-		if (dataCount == size) {
+		if (Find(record.key) || IsFull() ) {
 			throw -1;
 		}
 		pRecord[currentIndex] = record;

@@ -17,14 +17,14 @@ public:
         currList = -1;
     }
 
-    ListHashTable(const ListHashTable& other){
+    ListHashTable(const ListHashTable& oth){
         size = oth.size;
-        currList = oth.CurrList;
+        currList = oth.currList;
         eff = oth.eff;
         dataCount = oth.dataCount;
         pList = new std::list<Record<TKey, TVal>>[size];
         for (int i = 0; i < size; ++i) {
-            pList[i] = other.pList[i];
+            pList[i] = oth.pList[i];
         }
         if (currList >= 0 && currList < size && !pList[currList].empty()) {
             currIterator = pList[currList].begin();

@@ -65,7 +65,7 @@ public:
 	}
 
 	void Insert(Record<TKey, TVal> rec) {
-		if (Find(rec.key)) {
+		if (Find(rec.key) || IsFull()) {
 			throw -1;
 		}
 		eff++;
@@ -95,11 +95,10 @@ public:
 	}
 
 	void Reset() {
-		for (int i = 0; i < size; i++) {
-			if (pRec[i] != free && pRec[i] != del) {
-				currentIndex = i;
-				break;
-			}
+		currentIndex = 0;
+		while (currentIndex < size &&
+			(pRec[currentIndex] == free || pRec[currentIndex] == del)) {
+			currentIndex++;
 		}
 	}
 
