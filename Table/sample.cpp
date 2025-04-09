@@ -14,7 +14,9 @@ int main() {
 	table.Insert(Record<int, std::string>(6, "Bato Batuevich"));
 	table.Insert(Record<int, std::string>(5, "Zhargal Shushkevich"));
 
-	std::cout << "ScanTable before sort: " << std::endl;
+	SortTable<int, std::string> tableSort(table, QuickSortType);
+
+	/*std::cout << "ScanTable before sort: " << std::endl;
 	std::cout << table << std::endl;
 	table.QuickSort();
 	std::cout << "ScanTable after sort: " << std::endl;
@@ -26,8 +28,8 @@ int main() {
 	table1.Insert(Record<int, std::string>(3, "Dorzhi Zandakov"));
 	table1.Insert(Record<int, std::string>(6, "Bato Batuevich"));
 	table1.Insert(Record<int, std::string>(5, "Zhargal Shushkevich"));
-	table1.Insert(Record<int, std::string>(1, "Ayuna Ledyasheva"));
+	table1.Insert(Record<int, std::string>(1, "Ayuna Ledyasheva"));*/
 	std::cout << "SortTable:" << std::endl;
-	std::cout << table1 << std::endl;
+	std::cout << tableSort << std::endl;
 	return 0;
 }

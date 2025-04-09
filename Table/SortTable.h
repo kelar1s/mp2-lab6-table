@@ -4,12 +4,32 @@
 #include "Table.h"
 #include "Record.h"
 
+enum SortType {
+	MergeSortType,
+	QuickSortType,
+	SelectSortType
+};
+
 template<typename TKey, typename TVal>
 class SortTable : public ScanTable<TKey, TVal> {
 	Record<TKey, TVal>* tmpArr;
 public:
-	SortTable(int _size = 10) : ScanTable<TKey, TVal>(_size) {}
-	
+	SortTable(int _size = 10) : ScanTable<TKey, TVal>(_size), tmpArr(nullptr) {}
+	SortTable(const ScanTable<TKey, TVal>& t, SortType st = QuickSortType ) : ScanTable<TKey, TVal>(t), tmpArr(nullptr) {
+		if (st == QuickSortType) {
+			QuickSort();
+		}
+		else if (st == MergeSortType) {
+			tmpArr = new Record<TKey, TVal>[size];
+			MergeSort(0, size - 1);
+		}
+		else if (st == SelectSortType) {
+			SelectSort();
+		}
+	} 
+	~SortTable() {
+		delete[] tmpArr;
+	}
 	bool Find(TKey key) {
 		int start = 0, finish = dataCount - 1;
 		while (start <= finish) {
@@ -112,39 +132,44 @@ public:
 	}
 
 	void MergeSort(int left, int right) {
-		if (left == right) {
+		/*if (left == right) {
 			return;
 		}
 		int mid = (left + right) / 2;
 		MergeSort(left, mid);
 		MergeSort(mid + 1, right);
-		Merge(left, mid, right);
+		Merge(left, mid, right);*/
 	}
 
 	void Merge(int left, int mid, int right) {
-		int i = left, j = mid + 1, k = left;
+		/*int i = left, j = mid + 1, k = left;
 		while (i <= mid && j <= right) {
-			if (pRec[i].key < pRec[j].key) {
-				tmpArr[k] = pRec[i];
+			if (pRecord[i].key < pRecord[j].key) {
+				tmpArr[k] = pRecord[i];
 				i++; k++;
 			}
-			else if (pRec[i].key > pRec[j].key) {
-				tmpArr[k] = pRec[j];
+			else if (pRecord[i].key > pRecord[j].key) {
+				tmpArr[k] = pRecord[j];
 				j++; k++;
-			}
-			else {
-				tmpArr[k] = tmpArr[k + 1] = pRec[i];
-				i++; j++; k += 2;
 			}
 		}
 		for (; i <= mid; i++, k++) {
-			tmpArr[k] = pRec[i];
+			tmpArr[k] = pRecord[i];
 		}
 		for (; j <= right; j++, k++) {
-			tmpArr[k] = pRec[j];
+			tmpArr[k] = pRecord[j];
 		}
 		for (int i = left; i <= right; i++) {
-			pRec[i] = tmpArr[i];
+			pRecord[i] = tmpArr[i];
 		}
+		int i = left, j = mid + 1, k = left;
+		while (i <= mid && j <= right)
+		{
+			if (pRecord[i].key < pRecord[j].key) tmpArr[k++] = pRecord[i++];
+			else tmpArr[k++] = pRecord[j++];
+		}
+		if (i <= mid) while (i <= mid) tmpArr[k++] = pRecord[i++];
+		else while (j <= right) tmpArr[k++] = pRecord[j++];
+		for (i = left; i <= right; i++) pRecord[i] = tmpArr[i];*/
 	}
 };

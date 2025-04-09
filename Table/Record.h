@@ -15,9 +15,20 @@ public:
         return out;
     }
 
+    /*Record<TKey, TVal>& operator=(const Record<TKey, TVal>& oth) {
+        if (this == &oth) {
+            return *this;
+        }
+        key = oth.key;
+        val = oth.key;
+        return *this;
+    }*/
+
     bool operator==(const Record<TKey, TVal>& oth) {
         return this->key == oth.key;
     }
 
-    
+    bool operator!=(const Record<TKey, TVal>& oth) {
+        return !(*this == oth);
+    }
 };

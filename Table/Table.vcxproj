@@ -129,12 +129,14 @@
   <ItemGroup>
     <ClInclude Include="ArrayHashTable.h" />
     <ClInclude Include="ArrayTable.h" />
-    <ClInclude Include="ChainHashTable.h" />
     <ClInclude Include="HashTable.h" />
+    <ClInclude Include="ListHashTable.h" />
+    <ClInclude Include="ListIterator.h" />
     <ClInclude Include="Record.h" />
     <ClInclude Include="ScanTable.h" />
     <ClInclude Include="SortTable.h" />
     <ClInclude Include="Table.h" />
+    <ClInclude Include="TList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sample.cpp" />
