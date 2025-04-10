@@ -19,7 +19,7 @@ public:
     void Update(string message = "");
 
     void Clear() {
-        for (auto& table : scanTables) {
+        for (ScanTable<int, int>& table : scanTables) {
             while (!table.IsEmpty()) {
                 table.Reset();
                 table.Delete(table.GetCurrKey());
@@ -27,7 +27,7 @@ public:
             table.ClearEff(); 
         }
 
-        for (auto& table : sortTables) {
+        for (SortTable<int, int>& table : sortTables) {
             while (!table.IsEmpty()) {
                 table.Reset();
                 table.Delete(table.GetCurrKey());
@@ -35,7 +35,7 @@ public:
             table.ClearEff();
         }
 
-        for (auto& table : arrayHashTables) {
+        for (ArrayHashTable<int, int>& table : arrayHashTables) {
             while (!table.IsEmpty()) {
                 table.Reset();
                 table.Delete(table.GetCurrKey());

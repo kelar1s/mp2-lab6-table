@@ -32,6 +32,28 @@ TEST(ArrayHashTable, cant_insert_element_to_existing_position) {
 	ASSERT_ANY_THROW(aht.Insert(rec));
 }
 
+TEST(ArrayHashTable, find_existent_element_works_correct) {
+	ArrayHashTable<int, int> st(10);
+	for (int i = 0; i < 5; i++) {
+		Record<int, int> rec(i, i);
+		st.Insert(rec);
+	}
+	for (int i = 0; i < 5; i++) {
+		EXPECT_EQ(st.Find(i), true);
+	}
+}
+
+TEST(ArrayHashTable, cant_find_non_existent_element) {
+	ArrayHashTable<int, int> st(10);
+	for (int i = 0; i < 5; i++) {
+		Record<int, int> rec(i, i);
+		st.Insert(rec);
+	}
+	for (int i = 5; i < 10; i++) {
+		EXPECT_EQ(st.Find(i), false);
+	}
+}
+
 TEST(ArrayHashTable, can_delete_element_and_it_works_correct) {
 	ArrayHashTable<int, int> aht(10);
 	for (int i = 1; i < 10; i++) {

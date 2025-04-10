@@ -49,6 +49,7 @@ public:
 				return true;
 			}
 		}
+		eff++;
 		currentIndex = start;
 		return false;
 	}

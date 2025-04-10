@@ -59,6 +59,7 @@ public:
 			currentIndex = (currentIndex + step) % size;
 		}
 		if (temp != -1) {
+			eff++;
 			currentIndex = temp;
 		}
 		return false;

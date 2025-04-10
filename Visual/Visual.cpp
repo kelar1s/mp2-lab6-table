@@ -1,20 +1,19 @@
 #include "Visual.h"
 #include <chrono>
 #include <thread>
-#include <conio.h> // Для _kbhit()
+#include <conio.h>
 
 Visual::Visual() {
-    // Инициализация тестовых таблиц
-    ScanTable<int, int> st(105); // Увеличиваем размер для 100 элементов
+    ScanTable<int, int> st(101);
     st.Insert(Record<int, int>(1, 100));
     st.Insert(Record<int, int>(2, 200));
     scanTables.push_back(st);
 
-    SortTable<int, int> sortt(105);
+    SortTable<int, int> sortt(101);
     sortt.Insert(Record<int, int>(3, 300));
     sortTables.push_back(sortt);
 
-    ArrayHashTable<int, int> aht(105);
+    ArrayHashTable<int, int> aht(101);
     aht.Insert(Record<int, int>(4, 400));
     arrayHashTables.push_back(aht);
 }
@@ -27,7 +26,7 @@ void Visual::Run() {
             operation = tolower(_getch());
         }
         else {
-            this_thread::sleep_for(chrono::milliseconds(100));
+            this_thread::sleep_for(chrono::milliseconds(1000));
             continue;
         }
 
@@ -61,7 +60,7 @@ void Visual::Run() {
                 break;
 
             case '2': // Удаление элемента
-                cout << "\033[33m" << "Select table type: " << "\033[0m";
+                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash): " << "\033[0m";
                 cin >> tableType;
                 cout << "\033[33m" << "Enter table number: " << "\033[0m";
                 cin >> tableNum;
@@ -86,7 +85,7 @@ void Visual::Run() {
                 break;
 
             case '3': // Поиск элемента
-                cout << "\033[33m" << "Select table type: " << "\033[0m";
+                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash): " << "\033[0m";
                 cin >> tableType;
                 cout << "\033[33m" << "Enter table number: " << "\033[0m";
                 cin >> tableNum;
@@ -111,7 +110,7 @@ void Visual::Run() {
                 break;
 
             case '4': // Создать новую таблицу
-                cout << "\033[33m" << "Select table type: " << "\033[0m";
+                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash): " << "\033[0m";
                 cin >> tableType;
                 cout << "\033[33m" << "Enter table size: " << "\033[0m";
                 cin >> value;
@@ -132,29 +131,27 @@ void Visual::Run() {
                 Update("Table created!");
                 break;
 
-            case 'a': { // Автоматическое добавление элементов
+            case 'a': { // Добавление элементов от 0 до 100
                 Clear();
-                Update("Auto-adding elements 0-100 to all tables... (Press any key to stop)");
+                Update("Auto-adding elements 0-100 to all tables! (Press any key to stop)");
 
                 for (int key = 0; key <= 100; key++) {
                     if (_kbhit()) {
                         _getch();
-                        Update("Auto-adding stopped at key " + to_string(key));
+                        Update("Auto-adding stopped!");
                         break;
                     }
 
                     Record<int, int> rec(key, key * 10);
-
-                    // Добавление во все таблицы
-                    for (auto& table : scanTables) {
+                    for (ScanTable<int,int>& table : scanTables) {
                         try { table.Insert(rec); operations_count++; }
                         catch (...) {}
                     }
-                    for (auto& table : sortTables) {
+                    for (SortTable<int, int>& table : sortTables) {
                         try { table.Insert(rec); operations_count++; }
                         catch (...) {}
                     }
-                    for (auto& table : arrayHashTables) {
+                    for (ArrayHashTable<int, int>& table : arrayHashTables) {
                         try { table.Insert(rec); operations_count++; }
                         catch (...) {}
                     }
@@ -166,21 +163,21 @@ void Visual::Run() {
                 break;
             }
 
-            case 'd': { // Автоматическое удаление элементов
-            Update("Auto-deleting elements from all tables... (Press any key to stop)");
+            case 'd': { // Удаление элементов
+            Update("Auto-deleting elements from all tables! (Press any key to stop)");
             
             bool elementsExist = true;
             while (elementsExist) {
                 if (_kbhit()) {
                     _getch();
-                    Update("Auto-deleting stopped");
+                    Update("Auto-deleting stopped!");
                     break;
                 }
 
                 elementsExist = false;
                 
                 // Удаляем из всех таблиц
-                for (auto& table : scanTables) {
+                for (ScanTable<int, int>& table : scanTables) {
                     if (!table.IsEmpty()) {
                         table.Reset();
                         table.Delete(table.GetCurrKey());
@@ -188,7 +185,7 @@ void Visual::Run() {
                         elementsExist = true;
                     }
                 }
-                for (auto& table : sortTables) {
+                for (SortTable<int, int>& table : sortTables) {
                     if (!table.IsEmpty()) {
                         table.Reset();
                         table.Delete(table.GetCurrKey());
@@ -196,7 +193,7 @@ void Visual::Run() {
                         elementsExist = true;
                     }
                 }
-                for (auto& table : arrayHashTables) {
+                for (ArrayHashTable<int, int>& table : arrayHashTables) {
                     if (!table.IsEmpty()) {
                         table.Reset();
                         table.Delete(table.GetCurrKey());

@@ -36,6 +36,28 @@ TEST(ScanTable, cant_insert_element_to_existing_position) {
 	ASSERT_ANY_THROW(st.Insert(rec));
 }
 
+TEST(ScanTable, find_existent_element_works_correct) {
+	ScanTable<int, int> st(10);
+	for (int i = 0; i < 5; i++) {
+		Record<int, int> rec(i, i);
+		st.Insert(rec);
+	}
+	for (int i = 0; i < 5; i++) {
+		EXPECT_EQ(st.Find(i), true);
+	}
+}
+
+TEST(ScanTable, cant_find_non_existent_element) {
+	ScanTable<int, int> st(10);
+	for (int i = 0; i < 5; i++) {
+		Record<int, int> rec(i, i);
+		st.Insert(rec);
+	}
+	for (int i = 5; i < 10; i++) {
+		EXPECT_EQ(st.Find(i), false);
+	}
+}
+
 TEST(ScanTable, can_delete_element_and_it_works_correct) {
 	ScanTable<int, int> st(10);
 	for (int i = 5; i > 0; i--) {
