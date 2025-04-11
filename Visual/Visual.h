@@ -11,6 +11,7 @@ class Visual {
     vector<ScanTable<int, int>> scanTables;
     vector<SortTable<int, int>> sortTables;
     vector<ArrayHashTable<int, int>> arrayHashTables;
+    vector<ListHashTable<int, int>> listHashTables;
 
 public:
     Visual();
@@ -24,8 +25,10 @@ public:
         for (SortTable<int, int>& table : sortTables) {
             table.Clear();
         }
-
         for (ArrayHashTable<int, int>& table : arrayHashTables) {
+            table.Clear();
+        }
+        for (ListHashTable<int, int>& table : listHashTables) {
             table.Clear();
         }
     }

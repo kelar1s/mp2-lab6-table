@@ -4,18 +4,22 @@
 #include <conio.h>
 
 Visual::Visual() {
-    /*ScanTable<int, int> st(101);
-    st.Insert(Record<int, int>(1, 100));
-    st.Insert(Record<int, int>(2, 200));
+    ScanTable<int, int> st(101);
+    st.Insert(Record<int, int>(1, 10));
+    st.Insert(Record<int, int>(2, 20));
     scanTables.push_back(st);
 
     SortTable<int, int> sortt(101);
-    sortt.Insert(Record<int, int>(3, 300));
+    sortt.Insert(Record<int, int>(3, 30));
     sortTables.push_back(sortt);
 
     ArrayHashTable<int, int> aht(101);
-    aht.Insert(Record<int, int>(4, 400));
-    arrayHashTables.push_back(aht);*/
+    aht.Insert(Record<int, int>(4, 40));
+    arrayHashTables.push_back(aht);
+
+    ListHashTable<int, int> lht(101);
+    lht.Insert(Record<int, int>(5, 50));
+    listHashTables.push_back(lht);
 }
 
 void Visual::Run() {
@@ -36,10 +40,10 @@ void Visual::Run() {
         try {
             switch (operation) {
             case '1': // Вставка элемента
-                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash): " << "\033[0m";
+                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash): " << "\033[0m";
                 cin >> tableType;
-                if (tableType < 1 || tableType > 3) {
-                    Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash!");
+                if (tableType < 1 || tableType > 4) {
+                    Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash or 4-ListHash!");
                     break;
                 }
                 cout << "\033[33m" << "Enter table number: " << "\033[0m";
@@ -57,6 +61,10 @@ void Visual::Run() {
                 case 3:
                     tableExists = tableNum < arrayHashTables.size();
                     if (!tableExists) Update("There is no ArrayHashTable with this number!");
+                    break;
+                case 4:
+                    tableExists = tableNum < listHashTables.size();
+                    if (!tableExists) Update("There is no ListHashTable with this number!");
                     break;
                 }
                 if (!tableExists) {
@@ -78,17 +86,20 @@ void Visual::Run() {
                 case 3:
                     arrayHashTables[tableNum].Insert(Record<int, int>(key, value));
                     break;
+                case 4:
+                    listHashTables[tableNum].Insert(Record<int, int>(key, value));
+                    break;
                 default:
-                    throw invalid_argument("Invalid table type");
+                    throw -1;
                 }
                 Update("Insert successful!");
                 break;
 
             case '2': // Удаление элемента
-                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash): " << "\033[0m";
+                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash): " << "\033[0m";
                 cin >> tableType;
-                if (tableType < 1 || tableType > 3) {
-                    Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash!");
+                if (tableType < 1 || tableType > 4) {
+                    Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash or 4-ListHash!");
                     break;
                 }
                 cout << "\033[33m" << "Enter table number: " << "\033[0m";
@@ -106,6 +117,10 @@ void Visual::Run() {
                 case 3:
                     tableExists = tableNum < arrayHashTables.size();
                     if (!tableExists) Update("There is no ArrayHashTable with this number!");
+                    break;
+                case 4:
+                    tableExists = tableNum < listHashTables.size();
+                    if (!tableExists) Update("There is no ListHashTable with this number!");
                     break;
                 }
                 if (!tableExists) {
@@ -127,17 +142,20 @@ void Visual::Run() {
                 case 3:
                     arrayHashTables[tableNum].Delete(key);
                     break;
+                case 4:
+                    listHashTables[tableNum].Delete(key);
+                    break;
                 default:
-                    throw invalid_argument("Invalid table type");
+                    throw -1;
                 }
                 Update("Delete successful!");
                 break;
 
             case '3': // Поиск элемента
-                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash): " << "\033[0m";
+                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash): " << "\033[0m";
                 cin >> tableType;
-                if (tableType < 1 || tableType > 3) {
-                    Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash!");
+                if (tableType < 1 || tableType > 4) {
+                    Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash or 4-ListHash!");
                     break;
                 }
                 cout << "\033[33m" << "Enter table number: " << "\033[0m";
@@ -155,6 +173,10 @@ void Visual::Run() {
                 case 3:
                     tableExists = tableNum < arrayHashTables.size();
                     if (!tableExists) Update("There is no ArrayHashTable with this number!");
+                    break;
+                case 4:
+                    tableExists = tableNum < listHashTables.size();
+                    if (!tableExists) Update("There is no ListHashTable with this number!");
                     break;
                 }
                 if (!tableExists) {
@@ -177,17 +199,20 @@ void Visual::Run() {
                 case 3:
                     found = arrayHashTables[tableNum].Find(key);
                     break;
+                case 4:
+                    found = listHashTables[tableNum].Find(key);
+                    break;
                 default:
-                    throw invalid_argument("Invalid table type");
+                    throw -1;
                 }
                 Update(found ? "Key found!" : "Key not found!");
                 break;
 
             case '4': // Создать новую таблицу
-                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash): " << "\033[0m";
+                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash): " << "\033[0m";
                 cin >> tableType;
-                if (tableType < 1 || tableType > 3) {
-                    Update("Table type has to be 1-Scan or 2-Sort or 3-ArrayHash");
+                if (tableType < 1 || tableType > 4) {
+                    Update("Table type has to be 1-Scan or 2-Sort or 3-ArrayHash or 4-ListHash");
                     break;
                 }
                 cout << "\033[33m" << "Enter table size: " << "\033[0m";
@@ -206,14 +231,16 @@ void Visual::Run() {
                 case 3:
                     arrayHashTables.push_back(ArrayHashTable<int, int>(value));
                     break;
+                case 4:
+                    listHashTables.push_back(ListHashTable<int, int>(value));
+                    break;
                 default:
-                    throw invalid_argument("Invalid table type");
+                    throw -1;
                 }
                 Update("Table created!");
                 break;
 
             case 'a': { // Добавление случайных элементов
-                Clear();
                 int count;
                 Update("Enter number of random elements to add: ");
                 cin >> count;
@@ -240,6 +267,10 @@ void Visual::Run() {
                         catch (...) {}
                     }
                     for (ArrayHashTable<int, int>& table : arrayHashTables) {
+                        try { table.Insert(rec); }
+                        catch (...) {}
+                    }
+                    for (ListHashTable<int, int>& table : listHashTables) {
                         try { table.Insert(rec); }
                         catch (...) {}
                     }
@@ -286,6 +317,13 @@ void Visual::Run() {
                         elementsExist = true;
                     }
                 }
+                for (ListHashTable<int, int>& table : listHashTables) {
+                    if (!table.IsEmpty()) {
+                        table.Reset();
+                        table.Delete(table.GetCurrKey());
+                        elementsExist = true;
+                    }
+                }
                 Update("Auto-deleting...");
                 this_thread::sleep_for(chrono::seconds(1));
             }
@@ -316,6 +354,7 @@ void Visual::Run() {
 void Visual::Update(string message) {
     system("cls");
     cout << "\033[33m" << "=== Tables Manager ===" << "\033[0m" << endl << endl;
+    
     if (!scanTables.empty()) {
         cout << "Scan Tables:" << endl;
         for (size_t i = 0; i < scanTables.size(); i++) {
@@ -346,6 +385,17 @@ void Visual::Update(string message) {
             cout << endl;
         }
     }
+    if (!listHashTables.empty()) {
+        cout << endl << "List Hash Tables:" << endl;
+        for (size_t i = 0; i < listHashTables.size(); i++) {
+            cout << "  [" << i << "] (Eff: " << listHashTables[i].GetEff() << "): ";
+            for (listHashTables[i].Reset(); !listHashTables[i].IsEnd(); listHashTables[i].GoNext()) {
+                cout << listHashTables[i].GetCurrKey() << ":" << listHashTables[i].GetCurrVal() << " ";
+            }
+            cout << endl;
+        }
+    }
+
     cout << endl << "Operations:" << endl
         << "  1: Insert element" << endl
         << "  2: Delete element" << endl
