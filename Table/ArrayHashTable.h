@@ -114,4 +114,12 @@ public:
 		return currentIndex == size;
 	}
 	
+	void Clear() {
+		currentIndex = 0;
+		dataCount = 0;
+		ClearEff();
+		for (int i = 0; i < size; i++) {
+			pRec[i] = free;
+		}
+	}
 };

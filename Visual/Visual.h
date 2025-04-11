@@ -11,7 +11,6 @@ class Visual {
     vector<ScanTable<int, int>> scanTables;
     vector<SortTable<int, int>> sortTables;
     vector<ArrayHashTable<int, int>> arrayHashTables;
-    int operations_count = 0;
 
 public:
     Visual();
@@ -20,28 +19,14 @@ public:
 
     void Clear() {
         for (ScanTable<int, int>& table : scanTables) {
-            while (!table.IsEmpty()) {
-                table.Reset();
-                table.Delete(table.GetCurrKey());
-            }
-            table.ClearEff(); 
+            table.Clear();
         }
-
         for (SortTable<int, int>& table : sortTables) {
-            while (!table.IsEmpty()) {
-                table.Reset();
-                table.Delete(table.GetCurrKey());
-            }
-            table.ClearEff();
+            table.Clear();
         }
 
         for (ArrayHashTable<int, int>& table : arrayHashTables) {
-            while (!table.IsEmpty()) {
-                table.Reset();
-                table.Delete(table.GetCurrKey());
-            }
-            table.ClearEff();
+            table.Clear();
         }
-        operations_count = 0;
     }
 };

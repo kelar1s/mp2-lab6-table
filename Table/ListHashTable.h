@@ -68,7 +68,7 @@ public:
     }
 
     void Delete(TKey key) {
-        if (!Find(key)) {
+        if (!Find(key) || dataCount == 0) {
             throw - 1;
         }
         pList[currList].erase(currIterator);
@@ -113,5 +113,14 @@ public:
 
     TVal GetCurrVal() {
         return GetCurr().val;
+    }
+
+    void Clear() {
+        for (int i = 0; i < size; i++) {
+            pList[i].clear();
+        }
+        dataCount = 0;
+        currList = -1;
+        ClearEff();
     }
 };

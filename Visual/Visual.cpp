@@ -4,7 +4,7 @@
 #include <conio.h>
 
 Visual::Visual() {
-    ScanTable<int, int> st(101);
+    /*ScanTable<int, int> st(101);
     st.Insert(Record<int, int>(1, 100));
     st.Insert(Record<int, int>(2, 200));
     scanTables.push_back(st);
@@ -15,7 +15,7 @@ Visual::Visual() {
 
     ArrayHashTable<int, int> aht(101);
     aht.Insert(Record<int, int>(4, 400));
-    arrayHashTables.push_back(aht);
+    arrayHashTables.push_back(aht);*/
 }
 
 void Visual::Run() {
@@ -26,22 +26,48 @@ void Visual::Run() {
             operation = tolower(_getch());
         }
         else {
-            this_thread::sleep_for(chrono::milliseconds(1000));
+            this_thread::sleep_for(chrono::milliseconds(500));
             continue;
         }
 
         int tableType, tableNum, key, value;
+        bool tableExists;
 
         try {
             switch (operation) {
             case '1': // Вставка элемента
                 cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash): " << "\033[0m";
                 cin >> tableType;
+                if (tableType < 1 || tableType > 3) {
+                    Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash!");
+                    break;
+                }
                 cout << "\033[33m" << "Enter table number: " << "\033[0m";
                 cin >> tableNum;
+                tableExists = tableNum < 0;
+                switch (tableType) {
+                case 1:
+                    tableExists = tableNum < scanTables.size();
+                    if (!tableExists) Update("There is no ScanTable with this number!");
+                    break;
+                case 2:
+                    tableExists = tableNum < sortTables.size();
+                    if (!tableExists) Update("There is no SortTable with this number!");
+                    break;
+                case 3:
+                    tableExists = tableNum < arrayHashTables.size();
+                    if (!tableExists) Update("There is no ArrayHashTable with this number!");
+                    break;
+                }
+                if (!tableExists) {
+                    break;
+                }
                 cout << "\033[33m" << "Enter key and value: " << "\033[0m";
                 cin >> key >> value;
-
+                if (key < 0) {
+                    Update("The key must be a positive number!");
+                    break;
+                }
                 switch (tableType) {
                 case 1:
                     scanTables[tableNum].Insert(Record<int, int>(key, value));
@@ -55,18 +81,42 @@ void Visual::Run() {
                 default:
                     throw invalid_argument("Invalid table type");
                 }
-                operations_count++;
                 Update("Insert successful!");
                 break;
 
             case '2': // Удаление элемента
                 cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash): " << "\033[0m";
                 cin >> tableType;
+                if (tableType < 1 || tableType > 3) {
+                    Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash!");
+                    break;
+                }
                 cout << "\033[33m" << "Enter table number: " << "\033[0m";
                 cin >> tableNum;
-                cout << "\033[33m" << "Enter key to delete: " << "\033[0m";
+                tableExists = tableNum < 0;
+                switch (tableType) {
+                case 1:
+                    tableExists = tableNum < scanTables.size();
+                    if (!tableExists) Update("There is no ScanTable with this number!");
+                    break;
+                case 2:
+                    tableExists = tableNum < sortTables.size();
+                    if (!tableExists) Update("There is no SortTable with this number!");
+                    break;
+                case 3:
+                    tableExists = tableNum < arrayHashTables.size();
+                    if (!tableExists) Update("There is no ArrayHashTable with this number!");
+                    break;
+                }
+                if (!tableExists) {
+                    break;
+                }
+                cout << "\033[33m" << "Enter key: " << "\033[0m";
                 cin >> key;
-
+                if (key < 0) {
+                    Update("The key must be a positive number!");
+                    break;
+                }
                 switch (tableType) {
                 case 1:
                     scanTables[tableNum].Delete(key);
@@ -80,18 +130,42 @@ void Visual::Run() {
                 default:
                     throw invalid_argument("Invalid table type");
                 }
-                operations_count++;
                 Update("Delete successful!");
                 break;
 
             case '3': // Поиск элемента
                 cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash): " << "\033[0m";
                 cin >> tableType;
+                if (tableType < 1 || tableType > 3) {
+                    Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash!");
+                    break;
+                }
                 cout << "\033[33m" << "Enter table number: " << "\033[0m";
                 cin >> tableNum;
+                tableExists = tableNum < 0;
+                switch (tableType) {
+                case 1:
+                    tableExists = tableNum < scanTables.size();
+                    if (!tableExists) Update("There is no ScanTable with this number!");
+                    break;
+                case 2:
+                    tableExists = tableNum < sortTables.size();
+                    if (!tableExists) Update("There is no SortTable with this number!");
+                    break;
+                case 3:
+                    tableExists = tableNum < arrayHashTables.size();
+                    if (!tableExists) Update("There is no ArrayHashTable with this number!");
+                    break;
+                }
+                if (!tableExists) {
+                    break;
+                }
                 cout << "\033[33m" << "Enter key to find: " << "\033[0m";
                 cin >> key;
-
+                if (key < 0) {
+                    Update("The key must be a positive number!");
+                    break;
+                }
                 bool found;
                 switch (tableType) {
                 case 1:
@@ -112,9 +186,16 @@ void Visual::Run() {
             case '4': // Создать новую таблицу
                 cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash): " << "\033[0m";
                 cin >> tableType;
+                if (tableType < 1 || tableType > 3) {
+                    Update("Table type has to be 1-Scan or 2-Sort or 3-ArrayHash");
+                    break;
+                }
                 cout << "\033[33m" << "Enter table size: " << "\033[0m";
                 cin >> value;
-
+                if (value < 0) {
+                    Update("The size must be a positive number!");
+                    break;
+                }
                 switch (tableType) {
                 case 1:
                     scanTables.push_back(ScanTable<int, int>(value));
@@ -131,35 +212,42 @@ void Visual::Run() {
                 Update("Table created!");
                 break;
 
-            case 'a': { // Добавление элементов от 0 до 100
+            case 'a': { // Добавление случайных элементов
                 Clear();
-                Update("Auto-adding elements 0-100 to all tables! (Press any key to stop)");
-
-                for (int key = 0; key <= 100; key++) {
+                int count;
+                Update("Enter number of random elements to add: ");
+                cin >> count;
+                if (count < 0) {
+                    Update("The count must be a positive number!");
+                    break;
+                }
+                Update("Adding " + to_string(count) + " random elements to all tables... (Press any key to stop)");
+                srand(static_cast<unsigned int>(time(nullptr)));
+                for (int i = 0; i < count; i++) {
                     if (_kbhit()) {
                         _getch();
-                        Update("Auto-adding stopped!");
                         break;
                     }
-
-                    Record<int, int> rec(key, key * 10);
-                    for (ScanTable<int,int>& table : scanTables) {
-                        try { table.Insert(rec); operations_count++; }
+                    int key = rand() % (2 * count); 
+                    int value = key + 1; 
+                    Record<int, int> rec(key, value);
+                    for (ScanTable<int, int>& table : scanTables) {
+                        try { table.Insert(rec); }
                         catch (...) {}
                     }
                     for (SortTable<int, int>& table : sortTables) {
-                        try { table.Insert(rec); operations_count++; }
+                        try { table.Insert(rec); }
                         catch (...) {}
                     }
                     for (ArrayHashTable<int, int>& table : arrayHashTables) {
-                        try { table.Insert(rec); operations_count++; }
+                        try { table.Insert(rec); }
                         catch (...) {}
                     }
-
-                    Update("Auto-adding... " + to_string(key) + "/100");
+                    Update("Adding... " + to_string(i) + "/" + to_string(count));
                     this_thread::sleep_for(chrono::seconds(1));
                 }
-                Update("Auto-adding completed!");
+
+                Update("Adding completed!");
                 break;
             }
 
@@ -181,7 +269,6 @@ void Visual::Run() {
                     if (!table.IsEmpty()) {
                         table.Reset();
                         table.Delete(table.GetCurrKey());
-                        operations_count++;
                         elementsExist = true;
                     }
                 }
@@ -189,7 +276,6 @@ void Visual::Run() {
                     if (!table.IsEmpty()) {
                         table.Reset();
                         table.Delete(table.GetCurrKey());
-                        operations_count++;
                         elementsExist = true;
                     }
                 }
@@ -197,7 +283,6 @@ void Visual::Run() {
                     if (!table.IsEmpty()) {
                         table.Reset();
                         table.Delete(table.GetCurrKey());
-                        operations_count++;
                         elementsExist = true;
                     }
                 }
@@ -219,11 +304,8 @@ void Visual::Run() {
                 break;
             }
         }
-        catch (const exception& e) {
-            Update("Error: " + string(e.what()));
-        }
         catch (...) {
-            Update("Unknown error occurred!");
+            Update("Unknown error!");
         }
     }
     Update("Exiting...");
@@ -233,9 +315,7 @@ void Visual::Run() {
 
 void Visual::Update(string message) {
     system("cls");
-    cout << "\033[33m" << "=== Tables Manager (" << operations_count << " operations) ===" << "\033[0m" << endl << endl;
-
-    // Вывод ScanTables
+    cout << "\033[33m" << "=== Tables Manager ===" << "\033[0m" << endl << endl;
     if (!scanTables.empty()) {
         cout << "Scan Tables:" << endl;
         for (size_t i = 0; i < scanTables.size(); i++) {
@@ -246,8 +326,6 @@ void Visual::Update(string message) {
             cout << endl;
         }
     }
-
-    // Вывод SortTables
     if (!sortTables.empty()) {
         cout << endl << "Sort Tables:" << endl;
         for (size_t i = 0; i < sortTables.size(); i++) {
@@ -258,8 +336,6 @@ void Visual::Update(string message) {
             cout << endl;
         }
     }
-
-    // Вывод ArrayHashTables
     if (!arrayHashTables.empty()) {
         cout << endl << "Array Hash Tables:" << endl;
         for (size_t i = 0; i < arrayHashTables.size(); i++) {
@@ -270,18 +346,15 @@ void Visual::Update(string message) {
             cout << endl;
         }
     }
-
-    // Меню операций
     cout << endl << "Operations:" << endl
         << "  1: Insert element" << endl
         << "  2: Delete element" << endl
         << "  3: Find element" << endl
         << "  4: Create new table" << endl
-        << "  a: Auto-add 0-100 to all tables" << endl
+        << "  a: Auto-add random elements to all tables" << endl
         << "  d: Auto-delete all elements" << endl
         << "  l: Clear all tables" << endl
         << "  q: Quit" << endl << endl;
-
     if (!message.empty()) {
         cout << "\033[31m" << message << "\033[0m" << endl;
     }
