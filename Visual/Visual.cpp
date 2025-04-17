@@ -239,6 +239,45 @@ void Visual::Run() {
                 }
                 Update("Table created!");
                 break;
+            case 'f':
+                int cnt;
+                Update("Enter number of elements to add: ");
+                cin >> cnt;
+                if (cnt < 0) {
+                    Update("The count must be a positive number!");
+                    break;
+                }
+                Update("Adding " + to_string(cnt) + " elements to all tables... (Press any key to stop)");
+                for (int i = 0; i < cnt; i++) {
+                    if (_kbhit()) {
+                        _getch();
+                        break;
+                    }
+                    int key = i;
+                    int value = key + 1;
+                    Record<int, int> rec(key, value);
+                    for (ScanTable<int, int>& table : scanTables) {
+                        try { table.Insert(rec); }
+                        catch (...) {}
+                    }
+                    for (SortTable<int, int>& table : sortTables) {
+                        try { table.Insert(rec); }
+                        catch (...) {}
+                    }
+                    for (ArrayHashTable<int, int>& table : arrayHashTables) {
+                        try { table.Insert(rec); }
+                        catch (...) {}
+                    }
+                    for (ListHashTable<int, int>& table : listHashTables) {
+                        try { table.Insert(rec); }
+                        catch (...) {}
+                    }
+                    Update("Adding... " + to_string(i) + "/" + to_string(cnt));
+                    this_thread::sleep_for(chrono::milliseconds(500));
+                }
+
+                Update("Adding completed!");
+                break;
 
             case 'a': { // Добавление случайных элементов
                 int count;
@@ -335,6 +374,10 @@ void Visual::Run() {
                 Clear();
                 Update("All tables cleared!");
                 break;
+            case 'e':
+                ClearAllEff();
+                Update("Eff in all tables cleared!");
+                break;
             default:
                 if (operation != 'q') {
                     Update("Invalid operation.");
@@ -347,7 +390,7 @@ void Visual::Run() {
         }
     }
     Update("Exiting...");
-    this_thread::sleep_for(chrono::seconds(1));
+    this_thread::sleep_for(chrono::milliseconds(1000));
     exit(0);
 }
 
@@ -402,6 +445,7 @@ void Visual::Update(string message) {
         << "  3: Find element" << endl
         << "  4: Create new table" << endl
         << "  a: Auto-add random elements to all tables" << endl
+        << "  f: Auto-add elements from 0 to N to all tables" << endl
         << "  d: Auto-delete all elements" << endl
         << "  l: Clear all tables" << endl
         << "  q: Quit" << endl << endl;

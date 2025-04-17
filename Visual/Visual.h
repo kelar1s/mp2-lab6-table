@@ -32,4 +32,18 @@ public:
             table.Clear();
         }
     }
+    void ClearAllEff() {
+        for (ScanTable<int, int>& table : scanTables) {
+            table.ClearEff();
+        }
+        for (SortTable<int, int>& table : sortTables) {
+            table.ClearEff();
+        }
+        for (ArrayHashTable<int, int>& table : arrayHashTables) {
+            table.ClearEff();
+        }
+        for (ListHashTable<int, int>& table : listHashTables) {
+            table.ClearEff();
+        }
+    }
 };
