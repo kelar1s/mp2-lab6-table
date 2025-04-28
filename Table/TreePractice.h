@@ -2,6 +2,8 @@
 #include "Record.h"
 #include "Table.h"
 #include <stack>
+#include <iostream>
+using namespace std;
 
 template <typename TKey, typename TVal>
 struct TreeNode {
@@ -18,6 +20,7 @@ class TreeTable : Table<TKey, TVal> {
 protected:
 	TreeNode *pRoot, *pCurr, *pPrev;
 	std::stack<TreeNode*> st;
+	int pos, level;
 public: 
 	TreeTable() : pRoot(nullptr), pCurr(nullptr), pPrev(nullptr) {};
 
@@ -59,7 +62,131 @@ public:
 		eff++;
 		dataCount++;
 	}
-	//	Легкие случаи: Удалить лист, Один потомок(Поменять местами и удалить)
-	// Иначе находим звено идем налево ищем максимум в левом поддереве(идем 1 раз налево потом все направо) -> меняем местами
 
+	void Delete(TKey key) {
+		if (!Find(key)) {
+			throw -1;
+		}
+		TreeNode<TKey, TVal>* nodeToDelete = pCurr;
+		//Один потомок слева
+		if (pCurr->pRight == nullptr && pCurr->pLeft != nullptr) { //На практике без !=
+			eff++;
+			TreeNode<TKey, TVal>* child = pCurr->pLeft;
+			if (nodeToDelete == pRoot) {
+				pRoot = child;
+			}
+			else {
+				if (pPrev->pLeft == nodeToDelete) {
+					pPrev->pLeft = child;
+				}
+				else {
+					pPrev->pRight = child;
+				}
+			}
+		}
+		//Один потомок справа
+		else if (pCurr->pLeft == nullptr && pCurr->pRight != nullptr) { //На практике без !=
+			eff++;
+			TreeNode<TKey, TVal>* child = pCurr->pRight;
+			if (nodeToDelete == pRoot) {
+				pRoot = child;
+			}
+			else {
+				if (pPrev->pLeft == nodeToDelete) {
+					pPrev->pLeft = child;
+				}
+				else {
+					pPrev->pRight = child;
+				}
+			}
+		}
+		//Нет потомков - Лист
+		else if (pCurr->pLeft == nullptr && pCurr->pRight == nullptr) { // На практике не реализовывали
+			eff++;
+			if (nodeToDelete == pRoot) {
+				pRoot = nullptr;
+			}
+			else {
+				if (pPrev->pLeft == nodeToDelete) {
+					pPrev->pLeft = nullptr;
+				}
+				else {
+					pPrev->pRight = nullptr;
+				}
+			}
+		}
+		//Оба потомка
+		else {
+			TreeNode<TKey, TVal>* beforeMaxLeft = nodeToDelete;
+			TreeNode<TKey, TVal>* maxLeft = nodeToDelete->pLeft;
+			while (maxLeft->pRight != nullptr) {
+				eff++;
+				beforeMaxLeft = maxLeft;
+				maxLeft = maxLeft->pRight;
+			}
+			nodeToDelete->rec = maxLeft->rec;
+			if (nodeToDelete->pLeft == maxLeft) {
+				nodeToDelete->pLeft = maxLeft->pLeft;
+			}
+			else {
+				beforeMaxLeft->pRight = maxLeft->pLeft;
+			}
+			eff++;
+			nodeToDelete = maxLeft;
+		}
+		delete nodeToDelete;
+		dataCount--;
+	}
+	
+	void Reset() {
+		pCurr = pRoot;
+		while (!st.empty()) {
+			st.pop();
+		}
+		while (pCurr->pLeft != nullptr) {
+			st.push(pCurr);
+			pCurr = pCurr->pLeft;
+		}
+		st.push(pCurr);
+		pos = 0;
+	}
+
+	void GoNext() {
+		pCurr = pCurr->pRight;
+		st.pop();
+		if (pCurr == nullptr && !st.empty()) {
+			pCurr = st.top();
+		}
+		else {
+			while (pCurr->pLeft != nullptr) {
+				st.push(pCurr);
+				pCurr = pCurr->pLeft;
+			}
+			st.push(pCurr);
+		}
+		pos++;
+	}
+
+	bool IsEnd() {
+		return pos == dataCount;
+	}
+
+	void  PrintRec(ostream& os, TreeNode<TKey, TVal>* p) {
+		if (p == nullptr) {
+			return;
+		}
+		for (int i = 0; i < level; i++) {
+			os << " ";
+		}
+		os << p->rec.key; << endl;
+		level++;
+		PrintRec(os, p->pRight);
+		PrintRec(os, p->pLeft);
+		level--;
+	}
+
+	void PrintTree(ostream& os) {
+		level = 0;
+		PrintRec(os, pRoot);
+	}
 };

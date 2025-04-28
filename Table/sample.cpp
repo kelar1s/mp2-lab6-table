@@ -4,12 +4,13 @@
 #include "SortTable.h"
 #include "ArrayHashTable.h"
 #include "ListHashTable.h"
+#include "TreePractice.h"
 #include <iostream>
 
 
 
 int main() {
-	ListHashTable<int, std::string> table(10);
+	/*ListHashTable<int, std::string> table(10);
 	table.Insert(Record<int, std::string>(1, "Lesha Tsydenov"));
 	table.Insert(Record<int, std::string>(11, "Namzhal-Dorzho Tsybikov"));
 	table.Insert(Record<int, std::string>(2, "Namsarai Baltahinov"));
@@ -24,6 +25,9 @@ int main() {
 	std::cout << table << std::endl;
 	table.Clear();
 	std::cout << "Table 3:" << std::endl;
-	std::cout << table << std::endl;
+	std::cout << table << std::endl;*/
+
+	TreeTable<int, int> table1;
+
 	return 0;
 }
