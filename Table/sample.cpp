@@ -27,7 +27,7 @@ int main() {
 	std::cout << "Table 3:" << std::endl;
 	std::cout << table << std::endl;*/
 
-	TreeTable<int, int> table1;
+	
 
 	return 0;
 }

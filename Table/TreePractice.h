@@ -5,12 +5,14 @@
 #include <iostream>
 using namespace std;
 
+const int BAL_OK = 0; const int BAL_LEFT = -1; const int BAL_RIGHT = 1;
+
 template <typename TKey, typename TVal>
 struct TreeNode {
 	Record<TKey, TVal> rec;
 	TreeNode *pLeft = nullptr;
 	TreeNode *pRight = nullptr;
-	int bal; // ѕоказатель отвечающий за балансировку
+	int bal = BAL_OK; // ѕоказатель отвечающий за балансировку
 public:
 	TreeNode(TKey key, TVal val) : rec(key, val) {};
 };
@@ -18,8 +20,8 @@ public:
 template <typename TKey, typename TVal>
 class TreeTable : Table<TKey, TVal> {
 protected:
-	TreeNode *pRoot, *pCurr, *pPrev;
-	std::stack<TreeNode*> st;
+	TreeNode<TKey, TVal> *pRoot, *pCurr, *pPrev;
+	std::stack<TreeNode<TKey, TVal*> st;
 	int pos, level;
 public: 
 	TreeTable() : pRoot(nullptr), pCurr(nullptr), pPrev(nullptr) {};
@@ -49,7 +51,7 @@ public:
 		if (Find(record.key)) {
 			throw -1;
 		}
-		TreeNode<Tkey, Tval>* new_node = new TreeNode<TKey, TVal>(record.key, record.val);
+		TreeNode<TKey, TVal>* new_node = new TreeNode<TKey, TVal>(record.key, record.val);
 		if (pCurr == nullptr) {
 			pRoot = new_node;
 		}
