@@ -129,14 +129,15 @@
   <ItemGroup>
     <ClInclude Include="ArrayHashTable.h" />
     <ClInclude Include="ArrayTable.h" />
-    <ClInclude Include="BalanceTree.h" />
+    <ClInclude Include="BalancedTreeTable.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="ListHashTable.h" />
     <ClInclude Include="Record.h" />
     <ClInclude Include="ScanTable.h" />
     <ClInclude Include="SortTable.h" />
     <ClInclude Include="Table.h" />
-    <ClInclude Include="TreePractice.h" />
+    <ClInclude Include="TreeNode.h" />
+    <ClInclude Include="TreeTable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sample.cpp" />

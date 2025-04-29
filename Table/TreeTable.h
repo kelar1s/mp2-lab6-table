@@ -1,29 +1,16 @@
 #pragma once
-#include "Record.h"
-#include "Table.h"
 #include <stack>
 #include <iostream>
-using namespace std;
-
-const int BAL_OK = 0; const int BAL_LEFT = -1; const int BAL_RIGHT = 1;
-
-template <typename TKey, typename TVal>
-struct TreeNode {
-	Record<TKey, TVal> rec;
-	TreeNode *pLeft = nullptr;
-	TreeNode *pRight = nullptr;
-	int bal = BAL_OK; // Показатель отвечающий за балансировку
-public:
-	TreeNode(TKey key, TVal val) : rec(key, val) {};
-};
+#include "Table.h"
+#include "TreeNode.h"
 
 template <typename TKey, typename TVal>
-class TreeTable : Table<TKey, TVal> {
+class TreeTable : public Table<TKey, TVal> {
 protected:
-	TreeNode<TKey, TVal> *pRoot, *pCurr, *pPrev;
-	std::stack<TreeNode<TKey, TVal*> st;
-	int pos, level;
-public: 
+	TreeNode<TKey, TVal>* pRoot, * pCurr, * pPrev;
+	std::stack<TreeNode<TKey, TVal>*> st;
+	int pos = 0, level = 0;
+public:
 	TreeTable() : pRoot(nullptr), pCurr(nullptr), pPrev(nullptr) {};
 
 	bool Find(TKey key) {
@@ -47,18 +34,18 @@ public:
 		return false;
 	}
 
-	void Insert(Record<TKey, TVal> record) {
-		if (Find(record.key)) {
-			throw -1;
+	void Insert(Record<TKey, TVal> rec) {
+		if (Find(rec.key)) {
+			throw - 1;
 		}
-		TreeNode<TKey, TVal>* new_node = new TreeNode<TKey, TVal>(record.key, record.val);
+		TreeNode<TKey, TVal>* new_node = new TreeNode<TKey, TVal>(rec.key, rec.val);
 		if (pCurr == nullptr) {
 			pRoot = new_node;
 		}
-		else if (record.key > pCurr->rec.key) {
+		else if (rec.key > pCurr->rec.key) {
 			pCurr->pRight = new_node;
 		}
-		else if (record.key < pCurr->rec.key){
+		else if (rec.key < pCurr->rec.key) {
 			pCurr->pLeft = new_node;
 		}
 		eff++;
@@ -67,7 +54,7 @@ public:
 
 	void Delete(TKey key) {
 		if (!Find(key)) {
-			throw -1;
+			throw - 1;
 		}
 		TreeNode<TKey, TVal>* nodeToDelete = pCurr;
 		//Один потомок слева
@@ -139,21 +126,25 @@ public:
 		delete nodeToDelete;
 		dataCount--;
 	}
-	
+
 	void Reset() {
 		pCurr = pRoot;
 		while (!st.empty()) {
 			st.pop();
 		}
-		while (pCurr->pLeft != nullptr) {
-			st.push(pCurr);
-			pCurr = pCurr->pLeft;
-		}
-		st.push(pCurr);
-		pos = 0;
+		if (pCurr != nullptr) {
+            while (pCurr->pLeft != nullptr) {
+                st.push(pCurr);
+                pCurr = pCurr->pLeft;
+            }
+            st.push(pCurr);
+        }
+        pos = 0;
 	}
 
 	void GoNext() {
+		if (st.empty() || IsEnd()) return;
+
 		pCurr = pCurr->pRight;
 		st.pop();
 		if (pCurr == nullptr && !st.empty()) {
@@ -173,22 +164,45 @@ public:
 		return pos == dataCount;
 	}
 
-	void  PrintRec(ostream& os, TreeNode<TKey, TVal>* p) {
+	void  PrintRec(std::ostream& os, TreeNode<TKey, TVal>* p) {
 		if (p == nullptr) {
 			return;
 		}
 		for (int i = 0; i < level; i++) {
 			os << " ";
 		}
-		os << p->rec.key; << endl;
+		os << p->rec.key << std::endl;
 		level++;
 		PrintRec(os, p->pRight);
 		PrintRec(os, p->pLeft);
 		level--;
 	}
 
-	void PrintTree(ostream& os) {
+	void PrintTree(std::ostream& os) {
 		level = 0;
 		PrintRec(os, pRoot);
+	}
+
+	Record<TKey, TVal> GetCurr() {
+		return pCurr->rec;
+	}
+
+	TKey GetCurrKey() {
+		return pCurr->rec.key;
+	}
+
+	TVal GetCurrVal() {
+		return pCurr->rec.val;
+	}
+
+	bool IsFull() const {
+		try {
+			TreeNode<TKey, TVal>* tmp = new TreeNode<TKey, TVal>;
+			delete tmp;
+			return false;
+		}
+		catch (...) {
+			return true;
+		}
 	}
 };

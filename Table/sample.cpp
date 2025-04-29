@@ -4,7 +4,7 @@
 #include "SortTable.h"
 #include "ArrayHashTable.h"
 #include "ListHashTable.h"
-#include "TreePractice.h"
+#include "TreeTable.h"
 #include <iostream>
 
 
@@ -27,7 +27,20 @@ int main() {
 	std::cout << "Table 3:" << std::endl;
 	std::cout << table << std::endl;*/
 
-	
-
+	TreeTable<int, int> treetable;
+	for (int i = 10; i < 15; i++) {
+		treetable.Insert(Record<int, int>(i, i));
+	}
+	for (int i = 1; i < 5; i++) {
+		treetable.Insert(Record<int, int>(i, i));
+	}
+	for (int i = 7; i < 10; i++) {
+		treetable.Insert(Record<int, int>(i, i));
+	}
+	for (int i = 20; i < 26; i++) {
+		treetable.Insert(Record<int, int>(i, i));
+	}
+	std::cout << "Tree structure:" << std::endl;
+	treetable.PrintTree(std::cout);
 	return 0;
 }
