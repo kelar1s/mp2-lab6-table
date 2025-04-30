@@ -4,9 +4,9 @@
 const int H_OK, H_INC, H_DEC;
 
 template <typename TKey, typename TVal>
-class TBalTreeTable : public TreeTable<TKey, TVal> {
+class BalancedTreeTable : public TreeTable<TKey, TVal> {
 protected:
-	int InsBalTree(TreeNode<TKey, TVal>*& pNode, Record<TKey, TVal> rec) { //по ссылке корень тк он может измениться
+	int InsertBalancedTree(TreeNode<TKey, TVal>*& pNode, Record<TKey, TVal> rec) { //по ссылке корень тк он может измениться
 		int res = H_OK;
 		if (pNode == nullptr) {
 			eff++;
@@ -16,22 +16,22 @@ protected:
 		}
 		else if (pNode->rec.key > rec.key) {
 			eff++;
-			int tmp = InsBalTree(pNode->pLeft, rec);
+			int tmp = InsertBalancedTree(pNode->pLeft, rec);
 			if (tmp == H_INC) {
-				res = BalTreeLeft(pNode);
+				res = BalanceTreeLeft(pNode);
 			}
 		}
 		else if (pNode->rec.key < rec.key) {
 			eff++;
-			int tmp = InsBalTree(pNode->pRight, rec);
+			int tmp = InsertBalancedTree(pNode->pRight, rec);
 			if (tmp == H_INC) {
-				res = BalTreeRight(pNode);
+				res = BalanceTreeRight(pNode);
 			}
 		}
 		return res;
 	}
 
-	int BalTreeLeft(TreeNode<TKey, TVal>*& pNode) {
+	int BalanceTreeLeft(TreeNode<TKey, TVal>*& pNode) {
 		int res = H_OK;
 		if (pNode->bal == BAL_RIGHT) {
 			pNode->bal = BAL_OK;
@@ -41,9 +41,9 @@ protected:
 			pNode->bal = BAL_LEFT;
 			res = H_INC;
 		}
-		else (pNode->bal == BAL_LEFT) {
+		else if (pNode->bal == BAL_LEFT) {
 			TreeNode<TKey, TVal>* p1 = pNode->pLeft;
-			if (pl->Bal == BAL_LEFT) {
+			if (p1->Bal == BAL_LEFT) {
 				pNode->pLeft = p1->pRight;
 				p1->pRight = pNode;
 				pNode->bal = BAL_OK;
@@ -75,7 +75,7 @@ protected:
 		return res;
 	}
 
-	int BalTreeRight(TreeNode<TKey, TVal>*& pNode) {
+	int BalanceTreeRight(TreeNode<TKey, TVal>*& pNode) {
 
 	}
 public:
@@ -83,6 +83,6 @@ public:
 		if (Find(rec.key)) {
 			throw - 1;
 		}
-		InsBalTree(pRoot, rec);
+		InsertBalancedTree(pRoot, rec);
 	}
 };
