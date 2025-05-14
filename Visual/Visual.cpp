@@ -34,7 +34,8 @@ void Visual::Run() {
             continue;
         }
 
-        int tableType, tableNum, key, value;
+        int tableType, key, value;
+        int tableNum = 0;
         bool tableExists;
 
         try {
@@ -46,29 +47,31 @@ void Visual::Run() {
                     Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash or 4-ListHash!");
                     break;
                 }
-                cout << "\033[33m" << "Enter table number: " << "\033[0m";
-                cin >> tableNum;
-                tableExists = tableNum < 0;
-                switch (tableType) {
-                case 1:
-                    tableExists = tableNum < scanTables.size();
-                    if (!tableExists) Update("There is no ScanTable with this number!");
-                    break;
-                case 2:
-                    tableExists = tableNum < sortTables.size();
-                    if (!tableExists) Update("There is no SortTable with this number!");
-                    break;
-                case 3:
-                    tableExists = tableNum < arrayHashTables.size();
-                    if (!tableExists) Update("There is no ArrayHashTable with this number!");
-                    break;
-                case 4:
-                    tableExists = tableNum < listHashTables.size();
-                    if (!tableExists) Update("There is no ListHashTable with this number!");
-                    break;
-                }
-                if (!tableExists) {
-                    break;
+                if (scanTables.size() > 1 || sortTables.size() > 1 || arrayHashTables.size() > 1 || listHashTables.size() > 1) {
+                    cout << "\033[33m" << "Enter table number: " << "\033[0m";
+                    cin >> tableNum;
+                    tableExists = tableNum < 0;
+                    switch (tableType) {
+                    case 1:
+                        tableExists = tableNum < scanTables.size();
+                        if (!tableExists) Update("There is no ScanTable with this number!");
+                        break;
+                    case 2:
+                        tableExists = tableNum < sortTables.size();
+                        if (!tableExists) Update("There is no SortTable with this number!");
+                        break;
+                    case 3:
+                        tableExists = tableNum < arrayHashTables.size();
+                        if (!tableExists) Update("There is no ArrayHashTable with this number!");
+                        break;
+                    case 4:
+                        tableExists = tableNum < listHashTables.size();
+                        if (!tableExists) Update("There is no ListHashTable with this number!");
+                        break;
+                    }
+                    if (!tableExists) {
+                        break;
+                    }
                 }
                 cout << "\033[33m" << "Enter key and value: " << "\033[0m";
                 cin >> key >> value;
@@ -102,29 +105,31 @@ void Visual::Run() {
                     Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash or 4-ListHash!");
                     break;
                 }
-                cout << "\033[33m" << "Enter table number: " << "\033[0m";
-                cin >> tableNum;
-                tableExists = tableNum < 0;
-                switch (tableType) {
-                case 1:
-                    tableExists = tableNum < scanTables.size();
-                    if (!tableExists) Update("There is no ScanTable with this number!");
-                    break;
-                case 2:
-                    tableExists = tableNum < sortTables.size();
-                    if (!tableExists) Update("There is no SortTable with this number!");
-                    break;
-                case 3:
-                    tableExists = tableNum < arrayHashTables.size();
-                    if (!tableExists) Update("There is no ArrayHashTable with this number!");
-                    break;
-                case 4:
-                    tableExists = tableNum < listHashTables.size();
-                    if (!tableExists) Update("There is no ListHashTable with this number!");
-                    break;
-                }
-                if (!tableExists) {
-                    break;
+                if (scanTables.size() > 1 || sortTables.size() > 1 || arrayHashTables.size() > 1 || listHashTables.size() > 1) {
+                    cout << "\033[33m" << "Enter table number: " << "\033[0m";
+                    cin >> tableNum;
+                    tableExists = tableNum < 0;
+                    switch (tableType) {
+                    case 1:
+                        tableExists = tableNum < scanTables.size();
+                        if (!tableExists) Update("There is no ScanTable with this number!");
+                        break;
+                    case 2:
+                        tableExists = tableNum < sortTables.size();
+                        if (!tableExists) Update("There is no SortTable with this number!");
+                        break;
+                    case 3:
+                        tableExists = tableNum < arrayHashTables.size();
+                        if (!tableExists) Update("There is no ArrayHashTable with this number!");
+                        break;
+                    case 4:
+                        tableExists = tableNum < listHashTables.size();
+                        if (!tableExists) Update("There is no ListHashTable with this number!");
+                        break;
+                    }
+                    if (!tableExists) {
+                        break;
+                    }
                 }
                 cout << "\033[33m" << "Enter key: " << "\033[0m";
                 cin >> key;
@@ -158,30 +163,32 @@ void Visual::Run() {
                     Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash or 4-ListHash!");
                     break;
                 }
-                cout << "\033[33m" << "Enter table number: " << "\033[0m";
-                cin >> tableNum;
-                tableExists = tableNum < 0;
-                switch (tableType) {
-                case 1:
-                    tableExists = tableNum < scanTables.size();
-                    if (!tableExists) Update("There is no ScanTable with this number!");
-                    break;
-                case 2:
-                    tableExists = tableNum < sortTables.size();
-                    if (!tableExists) Update("There is no SortTable with this number!");
-                    break;
-                case 3:
-                    tableExists = tableNum < arrayHashTables.size();
-                    if (!tableExists) Update("There is no ArrayHashTable with this number!");
-                    break;
-                case 4:
-                    tableExists = tableNum < listHashTables.size();
-                    if (!tableExists) Update("There is no ListHashTable with this number!");
-                    break;
-                }
-                if (!tableExists) {
-                    break;
-                }
+                if (scanTables.size() > 1 || sortTables.size() > 1 || arrayHashTables.size() > 1 || listHashTables.size() > 1) {
+                    cout << "\033[33m" << "Enter table number: " << "\033[0m";
+                    cin >> tableNum;
+                    tableExists = tableNum < 0;
+                    switch (tableType) {
+                    case 1:
+                        tableExists = tableNum < scanTables.size();
+                        if (!tableExists) Update("There is no ScanTable with this number!");
+                        break;
+                    case 2:
+                        tableExists = tableNum < sortTables.size();
+                        if (!tableExists) Update("There is no SortTable with this number!");
+                        break;
+                    case 3:
+                        tableExists = tableNum < arrayHashTables.size();
+                        if (!tableExists) Update("There is no ArrayHashTable with this number!");
+                        break;
+                    case 4:
+                        tableExists = tableNum < listHashTables.size();
+                        if (!tableExists) Update("There is no ListHashTable with this number!");
+                        break;
+                    }
+                    if (!tableExists) {
+                        break;
+                    }
+                } 
                 cout << "\033[33m" << "Enter key to find: " << "\033[0m";
                 cin >> key;
                 if (key < 0) {
@@ -314,7 +321,7 @@ void Visual::Run() {
                         catch (...) {}
                     }
                     Update("Adding... " + to_string(i) + "/" + to_string(count));
-                    this_thread::sleep_for(chrono::seconds(1));
+                    this_thread::sleep_for(chrono::milliseconds(500));
                 }
 
                 Update("Adding completed!");
@@ -334,7 +341,6 @@ void Visual::Run() {
 
                 elementsExist = false;
                 
-                // Удаляем из всех таблиц
                 for (ScanTable<int, int>& table : scanTables) {
                     if (!table.IsEmpty()) {
                         table.Reset();
@@ -448,6 +454,7 @@ void Visual::Update(string message) {
         << "  f: Auto-add elements from 0 to N to all tables" << endl
         << "  d: Auto-delete all elements" << endl
         << "  l: Clear all tables" << endl
+        << "  e: Clear Eff in all tables" << endl
         << "  q: Quit" << endl << endl;
     if (!message.empty()) {
         cout << "\033[31m" << message << "\033[0m" << endl;
