@@ -159,7 +159,16 @@ protected:
 		return res;
 	}
 
+	void DeleteTreeNodeWithDesc(TreeNode<TKey, TVal>* pNode) {
+		DeleteTreeNodeWithDesc(pNode->pLeft);
+		DeleteTreeNodeWithDesc(pNode->pRight);
+		delete pNode;
+	}
 public:
+	~BalancedTreeTable() {
+		DeleteTreeNodeWithDesc(pRoot);
+	}
+
 	bool IsEmpty() {
 		return pRoot == nullptr;
 	}
