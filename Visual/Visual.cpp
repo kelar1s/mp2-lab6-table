@@ -47,7 +47,7 @@ void Visual::Run() {
                     Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash or 4-ListHash!");
                     break;
                 }
-                if (scanTables.size() > 1 || sortTables.size() > 1 || arrayHashTables.size() > 1 || listHashTables.size() > 1) {
+                if ((scanTables.size() > 1 && tableType == 1) || (sortTables.size() > 1 && tableType == 2) || (arrayHashTables.size() > 1 && tableType == 3) || (listHashTables.size() > 1 && tableType == 4)) {
                     cout << "\033[33m" << "Enter table number: " << "\033[0m";
                     cin >> tableNum;
                     tableExists = tableNum < 0;
@@ -105,7 +105,7 @@ void Visual::Run() {
                     Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash or 4-ListHash!");
                     break;
                 }
-                if (scanTables.size() > 1 || sortTables.size() > 1 || arrayHashTables.size() > 1 || listHashTables.size() > 1) {
+                if ((scanTables.size() > 1 && tableType == 1) || (sortTables.size() > 1 && tableType == 2) || (arrayHashTables.size() > 1 && tableType == 3) || (listHashTables.size() > 1 && tableType == 4)) {
                     cout << "\033[33m" << "Enter table number: " << "\033[0m";
                     cin >> tableNum;
                     tableExists = tableNum < 0;
@@ -163,7 +163,7 @@ void Visual::Run() {
                     Update("The table type must be 1-Scan or 2-Sort or 3-ArrayHash or 4-ListHash!");
                     break;
                 }
-                if (scanTables.size() > 1 || sortTables.size() > 1 || arrayHashTables.size() > 1 || listHashTables.size() > 1) {
+                if ((scanTables.size() > 1 && tableType == 1) || (sortTables.size() > 1 && tableType == 2) || (arrayHashTables.size() > 1 && tableType == 3) || (listHashTables.size() > 1 && tableType == 4)) {
                     cout << "\033[33m" << "Enter table number: " << "\033[0m";
                     cin >> tableNum;
                     tableExists = tableNum < 0;
