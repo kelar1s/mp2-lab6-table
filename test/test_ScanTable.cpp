@@ -71,6 +71,9 @@ TEST(ScanTable, can_delete_element_and_it_works_correct) {
 		EXPECT_EQ(i, st.GetCurrKey());
 		EXPECT_EQ(i, st.GetCurrVal());
 	}
+	for (int i = 4; i < 6; i++) {
+		EXPECT_EQ(st.Find(i), false);
+	}
 }
 
 TEST(ScanTable, cant_delete_non_existent_element) {

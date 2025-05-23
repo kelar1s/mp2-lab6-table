@@ -8,7 +8,7 @@ protected:
 	int step, currentIndex;
 	Record<TKey, TVal> free, del;
 public:
-	ArrayHashTable(int _size = 100, int _step = 3): step(_step), currentIndex(0) {
+	ArrayHashTable(int _size = 100, int _step = 17): step(_step), currentIndex(0) {
 		size = _size;
 		eff = 0;
 		dataCount = 0;

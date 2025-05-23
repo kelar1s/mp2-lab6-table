@@ -4,7 +4,7 @@
 #include <conio.h>
 
 Visual::Visual() {
-    ScanTable<int, int> st(101);
+    /*ScanTable<int, int> st(101);
     st.Insert(Record<int, int>(1, 10));
     st.Insert(Record<int, int>(2, 20));
     scanTables.push_back(st);
@@ -19,7 +19,7 @@ Visual::Visual() {
 
     ListHashTable<int, int> lht(101);
     lht.Insert(Record<int, int>(5, 50));
-    listHashTables.push_back(lht);
+    listHashTables.push_back(lht);*/
 }
 
 void Visual::Run() {
@@ -280,7 +280,7 @@ void Visual::Run() {
                         catch (...) {}
                     }
                     Update("Adding... " + to_string(i) + "/" + to_string(cnt));
-                    this_thread::sleep_for(chrono::milliseconds(500));
+                    this_thread::sleep_for(chrono::milliseconds(50));
                 }
 
                 Update("Adding completed!");
@@ -321,7 +321,7 @@ void Visual::Run() {
                         catch (...) {}
                     }
                     Update("Adding... " + to_string(i) + "/" + to_string(count));
-                    this_thread::sleep_for(chrono::milliseconds(500));
+                    this_thread::sleep_for(chrono::milliseconds(50));
                 }
 
                 Update("Adding completed!");
@@ -370,7 +370,7 @@ void Visual::Run() {
                     }
                 }
                 Update("Auto-deleting...");
-                this_thread::sleep_for(chrono::seconds(1));
+                this_thread::sleep_for(chrono::milliseconds(50));
             }
             Update("Auto-deleting completed!");
             break;
@@ -396,7 +396,7 @@ void Visual::Run() {
         }
     }
     Update("Exiting...");
-    this_thread::sleep_for(chrono::milliseconds(1000));
+    this_thread::sleep_for(chrono::milliseconds(50));
     exit(0);
 }
 

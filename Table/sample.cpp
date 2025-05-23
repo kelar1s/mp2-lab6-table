@@ -40,6 +40,16 @@ int main() {
 	for (int i = 20; i < 26; i++) {
 		treetable.Insert(Record<int, int>(i, i));
 	}
+	for (int i = 20; i < 22; i++) {
+		treetable.Delete(i);
+	}
+	for (int i = 3; i < 5; i++) {
+		treetable.Delete(i);
+	}
+	treetable.Insert(Record<int, int>(15, 15));
+	for (int i = 0; i < 40; i++) {
+		std::cout << i << "Exist: " << treetable.Find(i) << std::endl;
+	}
 	std::cout << "Tree structure:" << std::endl;
 	treetable.PrintTree(std::cout);
 	return 0;

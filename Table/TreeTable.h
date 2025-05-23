@@ -33,10 +33,10 @@ public:
 		pCurr = pPrev;
 		return false;
 	}
-
+	
 	void Insert(Record<TKey, TVal> rec) {
 		if (Find(rec.key)) {
-			throw - 1;
+			throw -1;
 		}
 		TreeNode<TKey, TVal>* new_node = new TreeNode<TKey, TVal>(rec.key, rec.val);
 		if (pCurr == nullptr) {
@@ -171,7 +171,7 @@ public:
 		for (int i = 0; i < level; i++) {
 			os << " ";
 		}
-		os << p->rec.key << std::endl;
+		os << p->rec.key << " l" << level << std::endl;
 		level++;
 		PrintRec(os, p->pRight);
 		PrintRec(os, p->pLeft);
