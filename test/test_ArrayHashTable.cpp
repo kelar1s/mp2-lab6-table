@@ -56,22 +56,18 @@ TEST(ArrayHashTable, cant_find_non_existent_element) {
 
 TEST(ArrayHashTable, can_delete_element_and_it_works_correct) {
 	ArrayHashTable<int, int> aht(10);
-	for (int i = 1; i < 10; i++) {
+	for (int i = 0; i < 10; i++) {
 		Record<int, int> rec(i, i);
 		aht.Insert(rec);
 	}
-	for (int i = 1; i % 2 == 0; i++) {
+	for (int i = 0; i < 10; i += 2) {
 		ASSERT_NO_THROW(aht.Delete(i));
 	}
-	int i = 1;
-	for (aht.Reset(); !aht.IsEnd() && i % 2 == 1; aht.GoNext(), i++) {
-		EXPECT_EQ(aht.Find(i), true);
-		EXPECT_EQ(aht.Find(i), true);
+	for (int i = 1; i < 10; i += 2) {
+		EXPECT_TRUE(aht.Find(i));
 	}
-	i = 1;
-	for (aht.Reset(); !aht.IsEnd() && i % 2 == 0; aht.GoNext(), i++) {
-		EXPECT_EQ(aht.Find(i), false);
-		EXPECT_EQ(aht.Find(i), false);
+	for (int i = 0; i < 10; i += 2) {
+		EXPECT_FALSE(aht.Find(i));
 	}
 }
 

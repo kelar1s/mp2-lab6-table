@@ -12,4 +12,8 @@ struct TreeNode {
 public:
 	TreeNode(): rec() {}
 	TreeNode(TKey key, TVal val) : rec(key, val) {};
+
+	bool operator==(const TreeNode<TKey, TVal>& oth) {
+		return rec.key == oth.rec->key;
+	}
 };
