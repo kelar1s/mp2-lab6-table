@@ -2,7 +2,7 @@
 #include "../Table/BalancedTreeTable.h"
 
 TEST(BalancedTreeTable, can_insert_element_and_it_works_correct) {
-	TreeTable<int, int> btt;
+	BalancedTreeTable<int, int> btt;
 	Record<int, int> rt(20, 20);
 	ASSERT_NO_THROW(btt.Insert(rt));
 	int i;
@@ -18,7 +18,7 @@ TEST(BalancedTreeTable, can_insert_element_and_it_works_correct) {
 }
 
 TEST(BalancedTreeTable, cant_insert_element_to_existing_position) {
-	TreeTable<int, int> btt;
+	BalancedTreeTable<int, int> btt;
 	Record<int, int> rt(20, 20);
 	btt.Insert(rt);
 	int i;
@@ -31,7 +31,7 @@ TEST(BalancedTreeTable, cant_insert_element_to_existing_position) {
 }
 
 TEST(BalancedTreeTable, can_find_element_and_it_works_correct) {
-	TreeTable<int, int> btt;
+	BalancedTreeTable<int, int> btt;
 	Record<int, int> rt(20, 20);
 	btt.Insert(rt);
 	int i;
@@ -47,7 +47,7 @@ TEST(BalancedTreeTable, can_find_element_and_it_works_correct) {
 }
 
 TEST(BalancedTreeTable, cant_find_non_existent_element) {
-	TreeTable<int, int> btt;
+	BalancedTreeTable<int, int> btt;
 	Record<int, int> rt(20, 20);
 	btt.Insert(rt);
 	int i;
@@ -60,7 +60,7 @@ TEST(BalancedTreeTable, cant_find_non_existent_element) {
 }
 
 TEST(BalancedTreeTable, can_delete_element_and_it_works_correct) {
-	TreeTable<int, int> btt;
+	BalancedTreeTable<int, int> btt;
 	Record<int, int> rt(5, 5);
 	btt.Insert(rt);
 	for (int i = 0; i < 5; i++) {
@@ -83,7 +83,7 @@ TEST(BalancedTreeTable, can_delete_element_and_it_works_correct) {
 }
 
 TEST(BalancedTreeTable, cant_delete_non_existent_element) {
-	TreeTable<int, int> btt;
+	BalancedTreeTable<int, int> btt;
 	Record<int, int> rt(5, 5);
 	btt.Insert(rt);
 	for (int i = 0; i < 5; i++) {

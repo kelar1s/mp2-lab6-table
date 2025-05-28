@@ -41,18 +41,18 @@ void Visual::Run() {
         try {
             switch (operation) {
             case '1': // Вставка элемента
-                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash, 5-Tree): " << "\033[0m";
+                std::cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash, 5-Tree, 6-BalancedTree): " << "\033[0m";
                 cin >> tableType;
-                if (tableType < 1 || tableType > 5) {
-                    Update("The table type must be 1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash or 5-Tree!");
+                if (tableType < 1 || tableType > 6) {
+                    Update("The table type must be 1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash, 5-Tree or 6-BalancedTree !");
                     break;
                 }
-                if (tableType != 5) {
+                if (tableType != 5 && tableType != 6) {
                     if ((scanTables.size() > 1 && tableType == 1) ||
                         (sortTables.size() > 1 && tableType == 2) ||
                         (arrayHashTables.size() > 1 && tableType == 3) ||
                         (listHashTables.size() > 1 && tableType == 4)) {
-                        cout << "\033[33m" << "Enter table number: " << "\033[0m";
+                        std::cout << "\033[33m" << "Enter table number: " << "\033[0m";
                         cin >> tableNum;
                         tableExists = false;
                         switch (tableType) {
@@ -82,7 +82,7 @@ void Visual::Run() {
                     }
                 }
 
-                cout << "\033[33m" << "Enter key and value: " << "\033[0m";
+                std::cout << "\033[33m" << "Enter key and value: " << "\033[0m";
                 cin >> key >> value;
                 if (key < 0) {
                     Update("The key must be a positive number!");
@@ -105,6 +105,9 @@ void Visual::Run() {
                 case 5:
                     treeTable.Insert(Record<int, int>(key, value));
                     break;
+                case 6:
+                    balancedTreeTable.Insert(Record<int, int>(key, value));
+                    break;
                 default:
                     throw - 1;
                 }
@@ -112,18 +115,18 @@ void Visual::Run() {
                 break;
 
             case '2': // Удаление элемента
-                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash, 5-Tree): " << "\033[0m";
+                std::cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash, 5-Tree, 6-BalancedTree): " << "\033[0m";
                 cin >> tableType;
-                if (tableType < 1 || tableType > 5) {
-                    Update("The table type must be 1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash or 5-Tree!");
+                if (tableType < 1 || tableType > 6) {
+                    Update("The table type must be 1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash, 5-Tree or 6-BalancedTree!");
                     break;
                 }
-                if (tableType != 5) {
+                if (tableType != 5 && tableType != 6) {
                     if ((scanTables.size() > 1 && tableType == 1) ||
                         (sortTables.size() > 1 && tableType == 2) ||
                         (arrayHashTables.size() > 1 && tableType == 3) ||
                         (listHashTables.size() > 1 && tableType == 4)) {
-                        cout << "\033[33m" << "Enter table number: " << "\033[0m";
+                        std::cout << "\033[33m" << "Enter table number: " << "\033[0m";
                         cin >> tableNum;
                         tableExists = false;
                         switch (tableType) {
@@ -153,7 +156,7 @@ void Visual::Run() {
                     }
                 }
 
-                cout << "\033[33m" << "Enter key: " << "\033[0m";
+                std::cout << "\033[33m" << "Enter key: " << "\033[0m";
                 cin >> key;
                 if (key < 0) {
                     Update("The key must be a positive number!");
@@ -175,24 +178,27 @@ void Visual::Run() {
                 case 5:
                     treeTable.Delete(key);
                     break;
+                case 6:
+                    balancedTreeTable.Delete(key);
+                    break;
                 default:
                     throw - 1;
                 }
                 Update("Delete successful!");
                 break;
             case '3': // Поиск элемента
-                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash, 5-Tree): " << "\033[0m";
+                std::cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash, 5-Tree, 6-BalancedTree): " << "\033[0m";
                 cin >> tableType;
-                if (tableType < 1 || tableType > 5) {
-                    Update("The table type must be 1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash or 5-Tree!");
+                if (tableType < 1 || tableType > 6) {
+                    Update("The table type must be 1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash, 5-Tree or 6-BalancedTree!");
                     break;
                 }
-                if (tableType != 5) {
+                if (tableType != 5 && tableType != 6) {
                     if ((scanTables.size() > 1 && tableType == 1) ||
                         (sortTables.size() > 1 && tableType == 2) ||
                         (arrayHashTables.size() > 1 && tableType == 3) ||
                         (listHashTables.size() > 1 && tableType == 4)) {
-                        cout << "\033[33m" << "Enter table number: " << "\033[0m";
+                        std::cout << "\033[33m" << "Enter table number: " << "\033[0m";
                         cin >> tableNum;
                         tableExists = false;
                         switch (tableType) {
@@ -211,7 +217,7 @@ void Visual::Run() {
                         case 4:
                             tableExists = tableNum < listHashTables.size();
                             if (!tableExists) Update("There is no ListHashTable with this number!");
-                            break;
+                            break;   
                         }
                         if (!tableExists) {
                             break;
@@ -222,7 +228,7 @@ void Visual::Run() {
                     }
                 }
 
-                cout << "\033[33m" << "Enter key to find: " << "\033[0m";
+                std::cout << "\033[33m" << "Enter key to find: " << "\033[0m";
                 cin >> key;
                 if (key < 0) {
                     Update("The key must be a positive number!");
@@ -246,6 +252,9 @@ void Visual::Run() {
                 case 5:
                     found = treeTable.Find(key);
                     break;
+                case 6:
+                    found = balancedTreeTable.Find(key);
+                    break;
                 default:
                     throw - 1;
                 }
@@ -253,19 +262,17 @@ void Visual::Run() {
                 break;
 
             case '4': // Создать новую таблицу
-                cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash, 5-Tree): " << "\033[0m";
+                std::cout << "\033[33m" << "Select table type (1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash): " << "\033[0m";
                 cin >> tableType;
                 if (tableType < 1 || tableType > 5) {
-                    Update("Table type has to be 1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash or 5-Tree");
+                    Update("Table type has to be 1-Scan, 2-Sort, 3-ArrayHash, 4-ListHash");
                     break;
                 }
-                if (tableType != 5) {
-                    cout << "\033[33m" << "Enter table size: " << "\033[0m";
-                    cin >> value;
-                    if (value < 0) {
-                        Update("The size must be a positive number!");
-                        break;
-                    }
+                std::cout << "\033[33m" << "Enter table size: " << "\033[0m";
+                cin >> value;
+                if (value < 0) {
+                    Update("The size must be a positive number!");
+                    break;
                 }
                 switch (tableType) {
                 case 1:
@@ -279,9 +286,6 @@ void Visual::Run() {
                     break;
                 case 4:
                     listHashTables.push_back(ListHashTable<int, int>(value));
-                    break;
-                case 5:
-                    treeTable.Clear();
                     break;
                 default:
                     throw - 1;
@@ -325,6 +329,8 @@ void Visual::Run() {
                     }
                     try { treeTable.Insert(rec); }
                     catch (...) {}
+                    try { balancedTreeTable.Insert(rec); }
+                    catch (...) {}
                     Update("Adding... " + to_string(i) + "/" + to_string(cnt));
                     this_thread::sleep_for(chrono::milliseconds(100));
                 }
@@ -366,6 +372,8 @@ void Visual::Run() {
                         catch (...) {}
                     }
                     try { treeTable.Insert(rec); }
+                    catch (...) {}
+                    try { balancedTreeTable.Insert(rec); }
                     catch (...) {}
                     Update("Adding... " + to_string(i) + "/" + to_string(count));
                     this_thread::sleep_for(chrono::milliseconds(100));
@@ -421,6 +429,11 @@ void Visual::Run() {
                     treeTable.Delete(treeTable.GetCurrKey());
                     elementsExist = true;
                 }
+                if (!balancedTreeTable.IsEmpty()) {
+                    treeTable.Reset();
+                    treeTable.Delete(treeTable.GetCurrKey());
+                    elementsExist = true;
+                }
                 Update("Auto-deleting...");
                 this_thread::sleep_for(chrono::milliseconds(50));
             }
@@ -430,10 +443,13 @@ void Visual::Run() {
             }
             case 'p':
                 system("cls");
-                cout << "\033[33m" << "=== Tree Structure ===" << "\033[0m" << endl << endl;
-                cout << "\033[1;33m" << "Tree Table:" << "\033[1;33m" << endl;
-                treeTable.PrintTree(cout);
-                cout << "\n\033[33mPress any key to continue...\033[0m";
+                std::cout << "\033[33m" << "=== Tree Structure ===" << "\033[0m" << endl << endl;
+                std::cout << "\033[1;33m" << "-> Tree Table:" << "\033[1;33m" << endl;
+                treeTable.PrintTree(std::cout);
+                std::cout << endl;
+                std::cout << "\033[1;33m" << "-> Balanced Tree Table:" << "\033[1;33m" << endl;
+                balancedTreeTable.PrintTree(std::cout);
+                std::cout << "\n\033[33mPress any key to continue...\033[0m";
                 _getch();
                 Update();
                 break;
@@ -463,68 +479,78 @@ void Visual::Run() {
 
 void Visual::Update(string message) {
     system("cls");
-    cout << "\033[33m" << "=== Tables Manager ===" << "\033[0m" << endl << endl;
+    std::cout << "\033[33m" << "=== Tables Manager ===" << "\033[0m" << endl << endl;
 
     // Вывод Scan Tables
     if (!scanTables.empty()) {
-        cout << "Scan Tables:" << endl;
+        std::cout << "Scan Tables:" << endl;
         for (size_t i = 0; i < scanTables.size(); i++) {
-            cout << "  [" << i << "] (Eff: " << scanTables[i].GetEff() << ", Size: "
+            std::cout << "  [" << i << "] (Eff: " << scanTables[i].GetEff() << ", Size: "
                 << scanTables[i].GetDataCount() << "): ";
             for (scanTables[i].Reset(); !scanTables[i].IsEnd(); scanTables[i].GoNext()) {
-                cout << scanTables[i].GetCurrKey() << ":" << scanTables[i].GetCurrVal() << " ";
+                std::cout << scanTables[i].GetCurrKey() << ":" << scanTables[i].GetCurrVal() << " ";
             }
-            cout << endl;
+            std::cout << endl;
         }
     }
 
     // Вывод Sort Tables
     if (!sortTables.empty()) {
-        cout << endl << "Sort Tables:" << endl;
+        std::cout << endl << "Sort Tables:" << endl;
         for (size_t i = 0; i < sortTables.size(); i++) {
-            cout << "  [" << i << "] (Eff: " << sortTables[i].GetEff() << ", Size: "
+            std::cout << "  [" << i << "] (Eff: " << sortTables[i].GetEff() << ", Size: "
                 << sortTables[i].GetDataCount() << "): ";
             for (sortTables[i].Reset(); !sortTables[i].IsEnd(); sortTables[i].GoNext()) {
-                cout << sortTables[i].GetCurrKey() << ":" << sortTables[i].GetCurrVal() << " ";
+                std::cout << sortTables[i].GetCurrKey() << ":" << sortTables[i].GetCurrVal() << " ";
             }
-            cout << endl;
+            std::cout << endl;
         }
     }
 
     // Вывод Array Hash Tables
     if (!arrayHashTables.empty()) {
-        cout << endl << "Array Hash Tables:" << endl;
+        std::cout << endl << "Array Hash Tables:" << endl;
         for (size_t i = 0; i < arrayHashTables.size(); i++) {
-            cout << "  [" << i << "] (Eff: " << arrayHashTables[i].GetEff() << ", Size: "
+            std::cout << "  [" << i << "] (Eff: " << arrayHashTables[i].GetEff() << ", Size: "
                 << arrayHashTables[i].GetDataCount() << "): ";
             for (arrayHashTables[i].Reset(); !arrayHashTables[i].IsEnd(); arrayHashTables[i].GoNext()) {
-                cout << arrayHashTables[i].GetCurrKey() << ":" << arrayHashTables[i].GetCurrVal() << " ";
+                std::cout << arrayHashTables[i].GetCurrKey() << ":" << arrayHashTables[i].GetCurrVal() << " ";
             }
-            cout << endl;
+            std::cout << endl;
         }
     }
 
     // Вывод List Hash Tables
     if (!listHashTables.empty()) {
-        cout << endl << "List Hash Tables:" << endl;
+        std::cout << endl << "List Hash Tables:" << endl;
         for (size_t i = 0; i < listHashTables.size(); i++) {
-            cout << "  [" << i << "] (Eff: " << listHashTables[i].GetEff() << ", Size: "
+            std::cout << "  [" << i << "] (Eff: " << listHashTables[i].GetEff() << ", Size: "
                 << listHashTables[i].GetDataCount() << "): ";
             for (listHashTables[i].Reset(); !listHashTables[i].IsEnd(); listHashTables[i].GoNext()) {
-                cout << listHashTables[i].GetCurrKey() << ":" << listHashTables[i].GetCurrVal() << " ";
+                std::cout << listHashTables[i].GetCurrKey() << ":" << listHashTables[i].GetCurrVal() << " ";
             }
-            cout << endl;
+            std::cout << endl;
         }
     }
 
     //Вывод TreeTable
-    cout << endl << "Tree Table:" << endl;
-    cout << "  [0] (Eff: " << treeTable.GetEff() << ", Size: " << treeTable.GetDataCount() << "): ";
+    std::cout << endl << "Tree Table:" << endl;
+    std::cout << "  [0] (Eff: " << treeTable.GetEff() << ", Size: " << treeTable.GetDataCount() << "): ";
     for (treeTable.Reset(); !treeTable.IsEnd(); treeTable.GoNext()) {
-        cout << treeTable.GetCurrKey() << ":" << treeTable.GetCurrVal() << " ";
+        std::cout << treeTable.GetCurrKey() << ":" << treeTable.GetCurrVal() << " ";
     }
-    cout << endl;
-    cout << endl << "Operations:" << endl
+
+    std::cout << endl;
+
+    //Вывод BalancedTreeTable
+    std::cout << endl << "BalancedTree Table:" << endl;
+    std::cout << "  [0] (Eff: " << balancedTreeTable.GetEff() << ", Size: " << balancedTreeTable.GetDataCount() << "): ";
+    for (balancedTreeTable.Reset(); !balancedTreeTable.IsEnd(); balancedTreeTable.GoNext()) {
+        std::cout << balancedTreeTable.GetCurrKey() << ":" << balancedTreeTable.GetCurrVal() << " ";
+    }
+
+    std::cout << endl;
+    std::cout << endl << "Operations:" << endl
         << "  1: Insert element" << endl
         << "  2: Delete element" << endl
         << "  3: Find element" << endl
@@ -538,7 +564,7 @@ void Visual::Update(string message) {
         << "  q: Quit" << endl << endl;
 
     if (!message.empty()) {
-        cout << "\033[31m" << message << "\033[0m" << endl;
+        std::cout << "\033[31m" << message << "\033[0m" << endl;
     }
 
 

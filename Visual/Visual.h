@@ -15,6 +15,7 @@ class Visual {
     vector<ArrayHashTable<int, int>> arrayHashTables;
     vector<ListHashTable<int, int>> listHashTables;
     TreeTable<int, int> treeTable;
+    BalancedTreeTable<int, int> balancedTreeTable;
 
 public:
     Visual();
@@ -35,6 +36,7 @@ public:
             table.Clear();
         }
         treeTable.Clear();
+        balancedTreeTable.Clear();
     }
     void ClearAllEff() {
         for (ScanTable<int, int>& table : scanTables) {
@@ -50,5 +52,6 @@ public:
             table.ClearEff();
         }
         treeTable.ClearEff();
+        balancedTreeTable.ClearEff();
     }
 };
