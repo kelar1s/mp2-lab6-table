@@ -149,6 +149,10 @@ public:
 		}
 		delete nodeToDelete;
 		dataCount--;
+		if (dataCount == 0) {
+			pCurr = nullptr;
+			pPrev = nullptr;
+		}
 	}
 
 	void Reset() {
@@ -192,7 +196,7 @@ public:
 		for (int i = 0; i < level; i++) {
 			os << " ";
 		}
-		os << p->rec.key << " l" << level << std::endl;
+		os << level << " level: " << p->rec.key << endl;
 		level++;
 		PrintRec(os, p->pRight);
 		PrintRec(os, p->pLeft);

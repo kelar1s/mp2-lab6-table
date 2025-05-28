@@ -424,11 +424,19 @@ void Visual::Run() {
                 Update("Auto-deleting...");
                 this_thread::sleep_for(chrono::milliseconds(50));
             }
-            treeTable.tonullptr();
+            /*treeTable.tonullptr();*/
             Update("Auto-deleting completed!");
             break;
             }
-
+            case 'p':
+                system("cls");
+                cout << "\033[33m" << "=== Tree Structure ===" << "\033[0m" << endl << endl;
+                cout << "\033[1;33m" << "Tree Table:" << "\033[1;33m" << endl;
+                treeTable.PrintTree(cout);
+                cout << "\n\033[33mPress any key to continue...\033[0m";
+                _getch();
+                Update();
+                break;
             case 'l':
                 Clear();
                 Update("All tables cleared!");
@@ -526,9 +534,12 @@ void Visual::Update(string message) {
         << "  d: Auto-delete all elements" << endl
         << "  l: Clear all tables" << endl
         << "  e: Clear Eff in all tables" << endl
-        << "  p: Print tree structure" << endl  // Добавлена новая операция
+        << "  p: Print tree structure" << endl 
         << "  q: Quit" << endl << endl;
+
     if (!message.empty()) {
         cout << "\033[31m" << message << "\033[0m" << endl;
     }
+
+
 }
