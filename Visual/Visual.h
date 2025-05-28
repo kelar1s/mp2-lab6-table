@@ -3,6 +3,8 @@
 #include "../Table/ListHashTable.h"
 #include "../Table/ScanTable.h"
 #include "../Table/SortTable.h"
+#include "../Table/TreeTable.h"
+#include "../Table/BalancedTreeTable.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -12,6 +14,7 @@ class Visual {
     vector<SortTable<int, int>> sortTables;
     vector<ArrayHashTable<int, int>> arrayHashTables;
     vector<ListHashTable<int, int>> listHashTables;
+    TreeTable<int, int> treeTable;
 
 public:
     Visual();
@@ -31,6 +34,7 @@ public:
         for (ListHashTable<int, int>& table : listHashTables) {
             table.Clear();
         }
+        treeTable.Clear();
     }
     void ClearAllEff() {
         for (ScanTable<int, int>& table : scanTables) {
@@ -45,5 +49,6 @@ public:
         for (ListHashTable<int, int>& table : listHashTables) {
             table.ClearEff();
         }
+        treeTable.ClearEff();
     }
 };

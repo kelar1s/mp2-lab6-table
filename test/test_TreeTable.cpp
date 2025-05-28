@@ -69,11 +69,9 @@ TEST(TreeTable, can_delete_element_and_it_works_correct) {
 	for (int i = 6; i < 10; i++) {
 		tt.Insert(Record<int, int>(i, i));
 	}
-
 	for (int i = 0; i < 10; i += 2) {
 		ASSERT_NO_THROW(tt.Delete(i));
 	}
-	
 	for (int i = 0; i < 10; i += 2) {
 		EXPECT_FALSE(tt.Find(i));
 	}
@@ -97,4 +95,3 @@ TEST(TreeTable, cant_delete_non_existent_element) {
 		ASSERT_ANY_THROW(tt.Delete(i));
 	}
 }
-

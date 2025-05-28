@@ -64,18 +64,14 @@ TEST(ListHashTable, can_delete_element_and_it_works_correct) {
 		Record<int, int> rec(i, i);
 		lht.Insert(rec);
 	}
-	for (int i = 1; i % 2 == 0; i++) {
+	for (int i = 2; i < 10; i += 2) {
 		ASSERT_NO_THROW(lht.Delete(i));
 	}
-	int i = 1;
-	for (lht.Reset(); !lht.IsEnd() && i % 2 == 1; lht.GoNext(), i++) {
-		EXPECT_EQ(lht.Find(i), true);
-		EXPECT_EQ(lht.Find(i), true);
+	for (int i = 1; i < 10; i += 2) {
+		EXPECT_TRUE(lht.Find(i));
 	}
-	i = 1;
-	for (lht.Reset(); !lht.IsEnd() && i % 2 == 0; lht.GoNext(), i++) {
-		EXPECT_EQ(lht.Find(i), false);
-		EXPECT_EQ(lht.Find(i), false);
+	for (int i = 2; i < 10; i += 2) {
+		EXPECT_FALSE(lht.Find(i));
 	}
 }
 

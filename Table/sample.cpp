@@ -47,8 +47,8 @@ int main() {
 		treetable.Delete(i);
 	}
 	treetable.Insert(Record<int, int>(15, 15));
-	for (int i = 0; i < 40; i++) {
-		std::cout << i << "Exist: " << treetable.Find(i) << std::endl;
+	for (treetable.Reset(); !treetable.IsEnd(); treetable.GoNext()) {
+		std::cout << treetable.GetCurrKey() << ":" << treetable.GetCurrVal() << std::endl;
 	}
 	std::cout << "Tree structure:" << std::endl;
 	treetable.PrintTree(std::cout);

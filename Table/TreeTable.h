@@ -11,7 +11,34 @@ protected:
 	std::stack<TreeNode<TKey, TVal>*> st;
 	int pos = 0, level = 0;
 public:
+	void tonullptr() {
+		pCurr = nullptr;
+		pPrev = nullptr;
+	}
+
 	TreeTable() : pRoot(nullptr), pCurr(nullptr), pPrev(nullptr) {};
+
+	~TreeTable() {
+		Clear();
+	}
+
+	void DeleteTreeNodeWithDesc(TreeNode<TKey, TVal>* pNode) {
+		if (pNode == nullptr) {
+			return;
+		}
+		DeleteTreeNodeWithDesc(pNode->pLeft);
+		DeleteTreeNodeWithDesc(pNode->pRight);
+		delete pNode;
+	}
+
+	void Clear() {
+		DeleteTreeNodeWithDesc(pRoot);
+		pCurr = nullptr;
+		pPrev = nullptr;
+		pRoot = nullptr;
+		dataCount = 0;
+		eff = 0;
+	}
 
 	bool Find(TKey key) {
 		pCurr = pRoot;
@@ -33,10 +60,10 @@ public:
 		pCurr = pPrev;
 		return false;
 	}
-	
+
 	void Insert(Record<TKey, TVal> rec) {
 		if (Find(rec.key)) {
-			throw -1;
+			throw - 1;
 		}
 		TreeNode<TKey, TVal>* new_node = new TreeNode<TKey, TVal>(rec.key, rec.val);
 		if (pCurr == nullptr) {
@@ -57,8 +84,8 @@ public:
 			throw - 1;
 		}
 		TreeNode<TKey, TVal>* nodeToDelete = pCurr;
-		//Один потомок слева
-		if (pCurr->pRight == nullptr && pCurr->pLeft != nullptr) { //На практике без !=
+
+		if (pCurr->pRight == nullptr && pCurr->pLeft != nullptr) {
 			eff++;
 			TreeNode<TKey, TVal>* child = pCurr->pLeft;
 			if (nodeToDelete == pRoot) {
@@ -73,8 +100,7 @@ public:
 				}
 			}
 		}
-		//Один потомок справа
-		else if (pCurr->pLeft == nullptr && pCurr->pRight != nullptr) { //На практике без !=
+		else if (pCurr->pLeft == nullptr && pCurr->pRight != nullptr) {
 			eff++;
 			TreeNode<TKey, TVal>* child = pCurr->pRight;
 			if (nodeToDelete == pRoot) {
@@ -89,8 +115,7 @@ public:
 				}
 			}
 		}
-		//Нет потомков - Лист
-		else if (pCurr->pLeft == nullptr && pCurr->pRight == nullptr) { // На практике не реализовывали
+		else if (pCurr->pLeft == nullptr && pCurr->pRight == nullptr) {
 			eff++;
 			if (nodeToDelete == pRoot) {
 				pRoot = nullptr;
@@ -104,7 +129,6 @@ public:
 				}
 			}
 		}
-		//Оба потомка
 		else {
 			TreeNode<TKey, TVal>* beforeMaxLeft = nodeToDelete;
 			TreeNode<TKey, TVal>* maxLeft = nodeToDelete->pLeft;
@@ -128,40 +152,37 @@ public:
 	}
 
 	void Reset() {
+		pos = 0;
+		if (IsEnd()) return;
 		pCurr = pRoot;
 		while (!st.empty()) {
 			st.pop();
 		}
-		if (pCurr != nullptr) {
-            while (pCurr->pLeft != nullptr) {
-                st.push(pCurr);
-                pCurr = pCurr->pLeft;
-            }
-            st.push(pCurr);
-        }
-        pos = 0;
+		while (pCurr->pLeft != nullptr) {
+			st.push(pCurr);
+			pCurr = pCurr->pLeft;
+		}
+		pos = 0;
 	}
 
 	void GoNext() {
-		if (st.empty() || IsEnd()) return;
-
 		pCurr = pCurr->pRight;
-		st.pop();
+		pos++;
+		if (IsEnd()) return;
 		if (pCurr == nullptr && !st.empty()) {
 			pCurr = st.top();
+			st.pop();
 		}
 		else {
 			while (pCurr->pLeft != nullptr) {
 				st.push(pCurr);
 				pCurr = pCurr->pLeft;
 			}
-			st.push(pCurr);
 		}
-		pos++;
 	}
 
 	bool IsEnd() {
-		return pos == dataCount;
+		return pos >= dataCount;
 	}
 
 	void  PrintRec(std::ostream& os, TreeNode<TKey, TVal>* p) {
