@@ -196,7 +196,7 @@ public:
 		for (int i = 0; i < level; i++) {
 			os << " ";
 		}
-		os << level << " level: " << p->rec.key << endl;
+		os  << " level " << level << ": " << p->rec.key << endl;
 		level++;
 		PrintRec(os, p->pRight);
 		PrintRec(os, p->pLeft);

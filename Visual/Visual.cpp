@@ -4,7 +4,7 @@
 #include <conio.h>
 
 Visual::Visual() {
-    ScanTable<int, int> st(101);
+   /* ScanTable<int, int> st(101);
     st.Insert(Record<int, int>(1, 10));
     st.Insert(Record<int, int>(2, 20));
     scanTables.push_back(st);
@@ -19,7 +19,7 @@ Visual::Visual() {
 
     ListHashTable<int, int> lht(101);
     lht.Insert(Record<int, int>(5, 50));
-    listHashTables.push_back(lht);
+    listHashTables.push_back(lht);*/
 }
 
 void Visual::Run() {
@@ -382,65 +382,6 @@ void Visual::Run() {
                 Update("Adding completed!");
                 break;
             }
-
-            case 'd': { // Удаление элементов
-            Update("Auto-deleting elements from all tables! (Press any key to stop)");
-            
-            bool elementsExist = true;
-            while (elementsExist) {
-                if (_kbhit()) {
-                    _getch();
-                    Update("Auto-deleting stopped!");
-                    break;
-                }
-
-                elementsExist = false;
-                
-                for (ScanTable<int, int>& table : scanTables) {
-                    if (!table.IsEmpty()) {
-                        table.Reset();
-                        table.Delete(table.GetCurrKey());
-                        elementsExist = true;
-                    }
-                }
-                for (SortTable<int, int>& table : sortTables) {
-                    if (!table.IsEmpty()) {
-                        table.Reset();
-                        table.Delete(table.GetCurrKey());
-                        elementsExist = true;
-                    }
-                }
-                for (ArrayHashTable<int, int>& table : arrayHashTables) {
-                    if (!table.IsEmpty()) {
-                        table.Reset();
-                        table.Delete(table.GetCurrKey());
-                        elementsExist = true;
-                    }
-                }
-                for (ListHashTable<int, int>& table : listHashTables) {
-                    if (!table.IsEmpty()) {
-                        table.Reset();
-                        table.Delete(table.GetCurrKey());
-                        elementsExist = true;
-                    }
-                }
-                if (!treeTable.IsEmpty()) {
-                    treeTable.Reset();
-                    treeTable.Delete(treeTable.GetCurrKey());
-                    elementsExist = true;
-                }
-                if (!balancedTreeTable.IsEmpty()) {
-                    treeTable.Reset();
-                    treeTable.Delete(treeTable.GetCurrKey());
-                    elementsExist = true;
-                }
-                Update("Auto-deleting...");
-                this_thread::sleep_for(chrono::milliseconds(50));
-            }
-            /*treeTable.tonullptr();*/
-            Update("Auto-deleting completed!");
-            break;
-            }
             case 'p':
                 system("cls");
                 std::cout << "\033[33m" << "=== Tree Structure ===" << "\033[0m" << endl << endl;
@@ -557,7 +498,6 @@ void Visual::Update(string message) {
         << "  4: Create new table" << endl
         << "  a: Auto-add random elements to all tables" << endl
         << "  f: Auto-add elements from 0 to N to all tables" << endl
-        << "  d: Auto-delete all elements" << endl
         << "  l: Clear all tables" << endl
         << "  e: Clear Eff in all tables" << endl
         << "  p: Print tree structure" << endl 
