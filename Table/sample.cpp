@@ -55,14 +55,13 @@ int main() {
 	std::cout << "Tree structure after delete pRoot:" << std::endl;
 	btt.PrintTree(std::cout);*/
 
-	BalancedTreeTable<int, int> btt;
-	Record<int, int> rt(20, 20);
-	btt.Insert(rt);
-	for (int i = 0; i < 20; i++) {
-		btt.Insert(Record<int, int>(i, i));
+	TreeTable<int, int> tt;
+
+	for (int i = 0; i < 1000; i++) {
+		tt.Insert(Record<int, int>(i, i));
 	}
-	for (int i = 0; i <= 20; i++) {
-		std::cout << "Found" << i << ": " << btt.Find(i) << std::endl;
-	}
+	tt.ClearEff();
+	tt.Delete(500);
+	std::cout << tt.GetEff();
 	return 0;
 }

@@ -12,8 +12,9 @@ TEST(TreeTable, can_insert_element_and_it_works_correct) {
 	for (i = 21; i < 32; i++) {
 		ASSERT_NO_THROW(tt.Insert(Record<int, int>(i, i)));
 	}
-	for (i = 0, tt.Reset(); i < 32 && tt.IsEnd();tt.GoNext(), i++) {
-		EXPECT_EQ(i, tt.GetCurr().key);
+	i = 1;
+	for (tt.Reset();!tt.IsEnd();tt.GoNext()) {
+		EXPECT_EQ(i++, tt.GetCurr().key);
 	}
 }
 
@@ -94,4 +95,25 @@ TEST(TreeTable, cant_delete_non_existent_element) {
 	for (int i = 10; i < 15; i++) {
 		ASSERT_ANY_THROW(tt.Delete(i));
 	}
+}
+
+TEST(TreeTable, efficiency_when_inserting) {
+	TreeTable<int, int> tt;
+	for (int i = 0; i < 999; i++) {
+		tt.Insert(Record<int, int>(i, i));
+	}
+	tt.ClearEff();
+	tt.Insert(Record<int, int>(1000, 1000));
+	EXPECT_EQ(tt.GetEff(), 1001);
+}
+
+TEST(TreeTable, efficiency_when_deleting) {
+	TreeTable<int, int> tt;
+
+	for (int i = 0; i < 1000; i++) {
+		tt.Insert(Record<int, int>(i, i));
+	}
+	tt.ClearEff();
+	tt.Delete(500);
+	EXPECT_EQ(tt.GetEff(), 502);
 }

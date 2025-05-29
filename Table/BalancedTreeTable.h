@@ -7,6 +7,99 @@ const bool InsTN = 1; const bool DelTN = 0;
 template <typename TKey, typename TVal>
 class BalancedTreeTable : public TreeTable<TKey, TVal> {
 protected:
+    int BalanceTreeLeft(TreeNode<TKey, TVal>*& pNode, bool flag = InsTN) {
+        int res = H_OK;
+        if (pNode->bal == BAL_RIGHT) {
+            pNode->bal = BAL_OK;
+            res = (flag == InsTN) ? H_OK : H_DEC;
+        }
+        else if (pNode->bal == BAL_OK) {
+            pNode->bal = BAL_LEFT;
+            res = (flag == InsTN) ? H_INC : H_OK;
+        }
+        else if (pNode->bal == BAL_LEFT) {
+            TreeNode<TKey, TVal>* p1 = pNode->pLeft;
+            if (p1->bal == BAL_LEFT) {
+                pNode->pLeft = p1->pRight;
+                p1->pRight = pNode;
+                pNode->bal = BAL_OK;
+                pNode = p1;
+                pNode->bal = BAL_OK;
+                res = (flag == InsTN) ? H_OK : H_DEC;
+            }
+            else {
+                TreeNode<TKey, TVal>* p2 = p1->pRight;
+                p1->pRight = p2->pLeft;
+                p2->pLeft = p1;
+                pNode->pLeft = p2->pRight;
+                p2->pRight = pNode;
+                if (p2->bal == BAL_LEFT) {
+                    pNode->bal = BAL_RIGHT;
+                    p1->bal = BAL_OK;
+                }
+                else if (p2->bal == BAL_RIGHT) {
+                    pNode->bal = BAL_OK;
+                    p1->bal = BAL_LEFT;
+                }
+                else {
+                    pNode->bal = BAL_OK;
+                    p1->bal = BAL_OK;
+                }
+
+                pNode = p2;
+                pNode->bal = BAL_OK;
+                res = (flag == InsTN) ? H_OK : H_DEC;
+            }
+        }
+        return res;
+    }
+
+    int BalanceTreeRight(TreeNode<TKey, TVal>*& pNode, bool flag = InsTN) {
+        int res = H_OK;
+        if (pNode->bal == BAL_LEFT) {
+            pNode->bal = BAL_OK;
+            res = (flag == InsTN) ? H_OK : H_DEC;
+        }
+        else if (pNode->bal == BAL_OK) {
+            pNode->bal = BAL_RIGHT;
+            res = (flag == InsTN) ? H_INC : H_OK;
+        }
+        else if (pNode->bal == BAL_RIGHT) {
+            TreeNode<TKey, TVal>* p1 = pNode->pRight;
+            if (p1->bal == BAL_RIGHT) {
+                pNode->pRight = p1->pLeft;
+                p1->pLeft = pNode;
+                pNode->bal = BAL_OK;
+                pNode = p1;
+                pNode->bal = BAL_OK;
+                res = (flag == InsTN) ? H_OK : H_DEC;
+            }
+            else {
+                TreeNode<TKey, TVal>* p2 = p1->pLeft;
+                p1->pLeft = p2->pRight;
+                p2->pRight = p1;
+                pNode->pRight = p2->pLeft;
+                p2->pLeft = pNode;
+                if (p2->bal == BAL_RIGHT) {
+                    pNode->bal = BAL_LEFT;
+                    p1->bal = BAL_OK;
+                }
+                else if (p2->bal == BAL_LEFT) {
+                    pNode->bal = BAL_OK;
+                    p1->bal = BAL_RIGHT;
+                }
+                else {
+                    pNode->bal = BAL_OK;
+                    p1->bal = BAL_OK;
+                }
+                pNode = p2;
+                pNode->bal = BAL_OK;
+                res = (flag == InsTN) ? H_OK : H_DEC;
+            }
+        }
+        return res;
+    }
+
     int InsertBalancedTreeNode(TreeNode<TKey, TVal>*& pNode, Record<TKey, TVal> rec) {
         int res = H_OK;
         if (pNode == nullptr) {
@@ -27,107 +120,6 @@ protected:
             int tmp = InsertBalancedTreeNode(pNode->pRight, rec);
             if (tmp == H_INC) {
                 res = BalanceTreeRight(pNode, InsTN);
-            }
-        }
-        return res;
-    }
-
-    int BalanceTreeLeft(TreeNode<TKey, TVal>*& pNode, bool flag = InsTN) {
-        if (pNode == nullptr) return H_OK;
-        int res = H_OK;
-        if (pNode->bal == BAL_RIGHT) {
-            pNode->bal = BAL_OK;
-            res = (flag == InsTN) ? H_OK : H_DEC;
-        }
-        else if (pNode->bal == BAL_OK) {
-            pNode->bal = BAL_LEFT;
-            res = (flag == InsTN) ? H_INC : H_OK;
-        }
-        else { 
-            TreeNode<TKey, TVal>* p1 = pNode->pLeft;
-            if (p1->bal == BAL_LEFT) {
-                pNode->pLeft = p1->pRight;
-                p1->pRight = pNode;
-                pNode->bal = BAL_OK;
-                pNode = p1;
-            }
-            else {
-                TreeNode<TKey, TVal>* p2 = p1->pRight;
-                p1->pRight = p2->pLeft;
-                p2->pLeft = p1;
-                pNode->pLeft = p2->pRight;
-                p2->pRight = pNode;
-
-                if (p2->bal == BAL_LEFT) {
-                    pNode->bal = BAL_RIGHT;
-                    p1->bal = BAL_OK;
-                }
-                else if (p2->bal == BAL_RIGHT) {
-                    pNode->bal = BAL_OK;
-                    p1->bal = BAL_LEFT;
-                }
-                else {
-                    pNode->bal = BAL_OK;
-                    p1->bal = BAL_OK;
-                }
-                pNode = p2;
-            }
-            pNode->bal = BAL_OK;
-            res = (flag == InsTN) ? H_OK : H_DEC;
-        }
-        return res;
-    }
-
-    int BalanceTreeRight(TreeNode<TKey, TVal>*& pNode, bool flag = InsTN) {
-        if (pNode == nullptr) return H_OK;
-        int res = H_OK;
-        if (pNode->bal == BAL_LEFT) {
-            pNode->bal = BAL_OK;
-            res = (flag == InsTN) ? H_OK : H_DEC;
-        }
-        else if (pNode->bal == BAL_OK) {
-            pNode->bal = BAL_RIGHT;
-            res = (flag == InsTN) ? H_INC : H_OK;
-        }
-        else { 
-            TreeNode<TKey, TVal>* p1 = pNode->pRight;
-            if (p1->bal == BAL_RIGHT || (flag == DelTN && p1->bal == BAL_OK)) {
-                pNode->pRight = p1->pLeft;
-                p1->pLeft = pNode;
-                if (p1->bal == BAL_RIGHT) {
-                    pNode->bal = BAL_OK;
-                    p1->bal = BAL_OK;
-                }
-                else {
-                    pNode->bal = BAL_RIGHT;
-                    p1->bal = BAL_LEFT;
-                }
-
-                pNode = p1;
-                res = (flag == InsTN) ? H_OK : H_DEC;
-            }
-            else {
-                TreeNode<TKey, TVal>* p2 = p1->pLeft;
-                p1->pLeft = p2->pRight;
-                p2->pRight = p1;
-                pNode->pRight = p2->pLeft;
-                p2->pLeft = pNode;
-                if (p2->bal == BAL_RIGHT) {
-                    pNode->bal = BAL_LEFT;
-                    p1->bal = BAL_OK;
-                }
-                else if (p2->bal == BAL_LEFT) {
-                    pNode->bal = BAL_OK;
-                    p1->bal = BAL_RIGHT;
-                }
-                else { 
-                    pNode->bal = BAL_OK;
-                    p1->bal = BAL_OK;
-                }
-
-                pNode = p2;
-                pNode->bal = BAL_OK;
-                res = (flag == InsTN) ? H_OK : H_DEC;
             }
         }
         return res;

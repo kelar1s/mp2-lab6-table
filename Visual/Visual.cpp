@@ -4,22 +4,22 @@
 #include <conio.h>
 
 Visual::Visual() {
-    ScanTable<int, int> st(100);
-    //st.Insert(Record<int, int>(1, 10));
-    //st.Insert(Record<int, int>(2, 20));
-    scanTables.push_back(st);
+    //ScanTable<int, int> st(100);
+    ////st.Insert(Record<int, int>(1, 10));
+    ////st.Insert(Record<int, int>(2, 20));
+    //scanTables.push_back(st);
 
-    SortTable<int, int> sortt(100);
-    //sortt.Insert(Record<int, int>(3, 30));
-    sortTables.push_back(sortt);
+    //SortTable<int, int> sortt(100);
+    ////sortt.Insert(Record<int, int>(3, 30));
+    //sortTables.push_back(sortt);
 
-    ArrayHashTable<int, int> aht(100);
-    //aht.Insert(Record<int, int>(4, 40));
-    arrayHashTables.push_back(aht);
+    //ArrayHashTable<int, int> aht(100);
+    ////aht.Insert(Record<int, int>(4, 40));
+    //arrayHashTables.push_back(aht);
 
-    ListHashTable<int, int> lht(100);
-    //lht.Insert(Record<int, int>(5, 50));
-    listHashTables.push_back(lht);
+    //ListHashTable<int, int> lht(100);
+    ////lht.Insert(Record<int, int>(5, 50));
+    //listHashTables.push_back(lht);
 }
 
 void Visual::Run() {
@@ -301,8 +301,6 @@ void Visual::Run() {
                     Update("The count must be a positive number!");
                     break;
                 }
-                Update("Adding " + to_string(cnt) + " elements to all tables... (Press any key to stop)");
-
                 for (int i = 0; i < cnt; i++) {
                     if (_kbhit()) {
                         _getch();
@@ -345,7 +343,6 @@ void Visual::Run() {
                     Update("The count must be a positive number!");
                     break;
                 }
-                Update("Adding " + to_string(count) + " random elements to all tables... (Press any key to stop)");
                 srand(static_cast<unsigned int>(time(nullptr)));
                 for (int i = 0; i < count; i++) {
                     if (_kbhit()) {
@@ -491,7 +488,7 @@ void Visual::Update(string message) {
     }
 
     std::cout << endl;
-    std::cout << endl << "Operations:" << endl
+    std::cout << endl << "\033[33m" << "Operations:" << endl
         << "  1: Insert element" << endl
         << "  2: Delete element" << endl
         << "  3: Find element" << endl
@@ -501,11 +498,9 @@ void Visual::Update(string message) {
         << "  l: Clear all tables" << endl
         << "  e: Clear Eff in all tables" << endl
         << "  p: Print tree structure" << endl 
-        << "  q: Quit" << endl << endl;
+        << "  q: Quit" << "\033[0m" << endl << endl;
 
     if (!message.empty()) {
         std::cout << "\033[31m" << message << "\033[0m" << endl;
     }
-
-
 }

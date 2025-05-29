@@ -93,3 +93,24 @@ TEST(BalancedTreeTable, cant_delete_non_existent_element) {
 		ASSERT_ANY_THROW(btt.Delete(i));
 	}
 }
+
+TEST(BalancedTreeTable, efficiency_when_inserting) {
+	BalancedTreeTable<int, int> btt;
+	for (int i = 0; i < 999; i++) {
+		btt.Insert(Record<int, int>(i, i));
+	}
+	btt.ClearEff();
+	btt.Insert(Record<int, int>(1000, 1000));
+	EXPECT_EQ(btt.GetEff(), 22);
+}
+
+TEST(BalancedTreeTable, efficiency_when_deleting) {
+	BalancedTreeTable<int, int> btt;
+
+	for (int i = 0; i < 1000; i++) {
+		btt.Insert(Record<int, int>(i, i));
+	}
+	btt.ClearEff();
+	btt.Delete(500);
+	EXPECT_EQ(btt.GetEff(), 20);
+}
