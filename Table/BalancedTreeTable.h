@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "TreeTable.h"
 
 const int H_OK = 0; const int H_INC = 1; const int H_DEC = -1;
@@ -33,6 +33,7 @@ protected:
     }
 
     int BalanceTreeLeft(TreeNode<TKey, TVal>*& pNode, bool flag = InsTN) {
+        if (pNode == nullptr) return H_OK;
         int res = H_OK;
         if (pNode->bal == BAL_RIGHT) {
             pNode->bal = BAL_OK;
@@ -42,15 +43,13 @@ protected:
             pNode->bal = BAL_LEFT;
             res = (flag == InsTN) ? H_INC : H_OK;
         }
-        else {
+        else { 
             TreeNode<TKey, TVal>* p1 = pNode->pLeft;
-            if (p1->bal == BAL_LEFT || (flag == DelTN && p1->bal == BAL_OK)) {
+            if (p1->bal == BAL_LEFT) {
                 pNode->pLeft = p1->pRight;
                 p1->pRight = pNode;
-                pNode->bal = (p1->bal == BAL_LEFT) ? BAL_OK : BAL_LEFT;
+                pNode->bal = BAL_OK;
                 pNode = p1;
-                pNode->bal = (flag == InsTN) ? BAL_OK : ((p1->bal == BAL_LEFT) ? BAL_RIGHT : BAL_OK);
-                res = (flag == InsTN) ? H_OK : H_DEC;
             }
             else {
                 TreeNode<TKey, TVal>* p2 = p1->pRight;
@@ -61,27 +60,26 @@ protected:
 
                 if (p2->bal == BAL_LEFT) {
                     pNode->bal = BAL_RIGHT;
+                    p1->bal = BAL_OK;
                 }
-                else {
+                else if (p2->bal == BAL_RIGHT) {
                     pNode->bal = BAL_OK;
-                }
-
-                if (p2->bal == BAL_RIGHT) {
                     p1->bal = BAL_LEFT;
                 }
                 else {
+                    pNode->bal = BAL_OK;
                     p1->bal = BAL_OK;
                 }
-
                 pNode = p2;
-                pNode->bal = BAL_OK;
-                res = (flag == InsTN) ? H_OK : H_DEC;
             }
+            pNode->bal = BAL_OK;
+            res = (flag == InsTN) ? H_OK : H_DEC;
         }
         return res;
     }
 
     int BalanceTreeRight(TreeNode<TKey, TVal>*& pNode, bool flag = InsTN) {
+        if (pNode == nullptr) return H_OK;
         int res = H_OK;
         if (pNode->bal == BAL_LEFT) {
             pNode->bal = BAL_OK;
@@ -91,14 +89,21 @@ protected:
             pNode->bal = BAL_RIGHT;
             res = (flag == InsTN) ? H_INC : H_OK;
         }
-        else {
+        else { 
             TreeNode<TKey, TVal>* p1 = pNode->pRight;
             if (p1->bal == BAL_RIGHT || (flag == DelTN && p1->bal == BAL_OK)) {
                 pNode->pRight = p1->pLeft;
                 p1->pLeft = pNode;
-                pNode->bal = (p1->bal == BAL_RIGHT) ? BAL_OK : BAL_RIGHT;
+                if (p1->bal == BAL_RIGHT) {
+                    pNode->bal = BAL_OK;
+                    p1->bal = BAL_OK;
+                }
+                else {
+                    pNode->bal = BAL_RIGHT;
+                    p1->bal = BAL_LEFT;
+                }
+
                 pNode = p1;
-                pNode->bal = (flag == InsTN) ? BAL_OK : ((p1->bal == BAL_RIGHT) ? BAL_LEFT : BAL_OK);
                 res = (flag == InsTN) ? H_OK : H_DEC;
             }
             else {
@@ -107,18 +112,16 @@ protected:
                 p2->pRight = p1;
                 pNode->pRight = p2->pLeft;
                 p2->pLeft = pNode;
-
                 if (p2->bal == BAL_RIGHT) {
                     pNode->bal = BAL_LEFT;
+                    p1->bal = BAL_OK;
                 }
-                else {
+                else if (p2->bal == BAL_LEFT) {
                     pNode->bal = BAL_OK;
-                }
-
-                if (p2->bal == BAL_LEFT) {
                     p1->bal = BAL_RIGHT;
                 }
-                else {
+                else { 
+                    pNode->bal = BAL_OK;
                     p1->bal = BAL_OK;
                 }
 
@@ -204,18 +207,7 @@ protected:
         return res;
     }
 
-    void DeleteTreeNodeWithDesc(TreeNode<TKey, TVal>* pNode) {
-        if (pNode == nullptr) return;
-        DeleteTreeNodeWithDesc(pNode->pLeft);
-        DeleteTreeNodeWithDesc(pNode->pRight);
-        delete pNode;
-    }
-
 public:
-    ~BalancedTreeTable() {
-        DeleteTreeNodeWithDesc(pRoot);
-    }
-
     bool IsEmpty() const {
         return pRoot == nullptr;
     }
@@ -244,7 +236,7 @@ public:
 
     void Insert(Record<TKey, TVal> rec) {
         if (Find(rec.key)) {
-            throw - 1;
+            throw -1;
         }
         InsertBalancedTreeNode(pRoot, rec);
     }

@@ -5,6 +5,7 @@
 #include "ArrayHashTable.h"
 #include "ListHashTable.h"
 #include "TreeTable.h"
+#include "BalancedTreeTable.h"
 #include <iostream>
 
 
@@ -27,30 +28,41 @@ int main() {
 	std::cout << "Table 3:" << std::endl;
 	std::cout << table << std::endl;*/
 
-	TreeTable<int, int> treetable;
-	for (int i = 10; i < 15; i++) {
-		treetable.Insert(Record<int, int>(i, i));
+	/*BalancedTreeTable<int, int> btt;
+	
+	btt.Insert(Record<int, int>(15, 15));
+	for (int i = 0; i < 15; i++) {
+		btt.Insert(Record<int, int>(i, i));
 	}
-	for (int i = 1; i < 5; i++) {
-		treetable.Insert(Record<int, int>(i, i));
+	for (int i = 16; i < 30; i++) {
+		btt.Insert(Record<int, int>(i, i));
 	}
-	for (int i = 7; i < 10; i++) {
-		treetable.Insert(Record<int, int>(i, i));
+	for (btt.Reset(); !btt.IsEnd(); btt.GoNext()) {
+		std::cout << btt.GetCurrKey() << ":" << btt.GetCurrVal() << std::endl;
 	}
-	for (int i = 20; i < 26; i++) {
-		treetable.Insert(Record<int, int>(i, i));
-	}
-	for (int i = 20; i < 22; i++) {
-		treetable.Delete(i);
-	}
-	for (int i = 3; i < 5; i++) {
-		treetable.Delete(i);
-	}
-	treetable.Insert(Record<int, int>(15, 15));
-	for (treetable.Reset(); !treetable.IsEnd(); treetable.GoNext()) {
-		std::cout << treetable.GetCurrKey() << ":" << treetable.GetCurrVal() << std::endl;
-	}
+
+	std::cout << std::endl;
 	std::cout << "Tree structure:" << std::endl;
-	treetable.PrintTree(std::cout);
+	btt.PrintTree(std::cout);
+
+	std::cout << std::endl << "After delete pRoot" << std::endl;
+
+	btt.Delete(15);
+	for (btt.Reset(); !btt.IsEnd(); btt.GoNext()) {
+		std::cout << btt.GetCurrKey() << ":" << btt.GetCurrVal() << std::endl;
+	}
+
+	std::cout << "Tree structure after delete pRoot:" << std::endl;
+	btt.PrintTree(std::cout);*/
+
+	BalancedTreeTable<int, int> btt;
+	Record<int, int> rt(20, 20);
+	btt.Insert(rt);
+	for (int i = 0; i < 20; i++) {
+		btt.Insert(Record<int, int>(i, i));
+	}
+	for (int i = 0; i <= 20; i++) {
+		std::cout << "Found" << i << ": " << btt.Find(i) << std::endl;
+	}
 	return 0;
 }

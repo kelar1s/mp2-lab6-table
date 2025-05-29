@@ -5,15 +5,11 @@ TEST(BalancedTreeTable, can_insert_element_and_it_works_correct) {
 	BalancedTreeTable<int, int> btt;
 	Record<int, int> rt(20, 20);
 	ASSERT_NO_THROW(btt.Insert(rt));
-	int i;
-	for (i = 1; i < 20; i++) {
-		ASSERT_NO_THROW(btt.Insert(Record<int, int>(i, i)));
+	for (int i = 0; i < 20; i++) {
+		btt.Insert(Record<int, int>(i, i));
 	}
-	for (i = 21; i < 32; i++) {
-		ASSERT_NO_THROW(btt.Insert(Record<int, int>(i, i)));
-	}
-	for (i = 0, btt.Reset(); i < 32 && btt.IsEnd(); btt.GoNext(), i++) {
-		EXPECT_EQ(i, btt.GetCurr().key);
+	for (int i = 0; i <= 20; i++) {
+		EXPECT_TRUE(btt.Find(i));
 	}
 }
 

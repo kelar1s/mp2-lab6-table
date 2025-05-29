@@ -11,15 +11,13 @@ protected:
 	std::stack<TreeNode<TKey, TVal>*> st;
 	int pos = 0, level = 0;
 public:
-	void tonullptr() {
-		pCurr = nullptr;
-		pPrev = nullptr;
-	}
 
 	TreeTable() : pRoot(nullptr), pCurr(nullptr), pPrev(nullptr) {};
 
+	TreeTable(const TreeTable<TKey, TVal>& t) : pRoot(nullptr), pCurr(nullptr), pPrev(nullptr), pos(0), dataCount(other.dataCount), level(0) { pRoot = CopyNode(t.pRoot); }
+
 	~TreeTable() {
-		Clear();
+		DeleteTreeNodeWithDesc(pRoot);
 	}
 
 	void DeleteTreeNodeWithDesc(TreeNode<TKey, TVal>* pNode) {
@@ -33,9 +31,6 @@ public:
 
 	void Clear() {
 		DeleteTreeNodeWithDesc(pRoot);
-		pCurr = nullptr;
-		pPrev = nullptr;
-		pRoot = nullptr;
 		dataCount = 0;
 		eff = 0;
 	}
