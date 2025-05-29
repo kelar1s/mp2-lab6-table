@@ -31,6 +31,9 @@ public:
 
 	void Clear() {
 		DeleteTreeNodeWithDesc(pRoot);
+		pRoot = nullptr;
+		pCurr = nullptr;
+		pPrev = nullptr;
 		dataCount = 0;
 		eff = 0;
 	}

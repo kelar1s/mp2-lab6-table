@@ -4,22 +4,22 @@
 #include <conio.h>
 
 Visual::Visual() {
-   /* ScanTable<int, int> st(101);
-    st.Insert(Record<int, int>(1, 10));
-    st.Insert(Record<int, int>(2, 20));
+    ScanTable<int, int> st(100);
+    //st.Insert(Record<int, int>(1, 10));
+    //st.Insert(Record<int, int>(2, 20));
     scanTables.push_back(st);
 
-    SortTable<int, int> sortt(101);
-    sortt.Insert(Record<int, int>(3, 30));
+    SortTable<int, int> sortt(100);
+    //sortt.Insert(Record<int, int>(3, 30));
     sortTables.push_back(sortt);
 
-    ArrayHashTable<int, int> aht(101);
-    aht.Insert(Record<int, int>(4, 40));
+    ArrayHashTable<int, int> aht(100);
+    //aht.Insert(Record<int, int>(4, 40));
     arrayHashTables.push_back(aht);
 
-    ListHashTable<int, int> lht(101);
-    lht.Insert(Record<int, int>(5, 50));
-    listHashTables.push_back(lht);*/
+    ListHashTable<int, int> lht(100);
+    //lht.Insert(Record<int, int>(5, 50));
+    listHashTables.push_back(lht);
 }
 
 void Visual::Run() {
