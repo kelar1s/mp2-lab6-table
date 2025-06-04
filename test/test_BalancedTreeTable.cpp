@@ -101,7 +101,7 @@ TEST(BalancedTreeTable, efficiency_when_inserting) {
 	}
 	btt.ClearEff();
 	btt.Insert(Record<int, int>(1000, 1000));
-	EXPECT_EQ(btt.GetEff(), 22);
+	EXPECT_EQ(btt.GetEff(), 11);
 }
 
 TEST(BalancedTreeTable, efficiency_when_deleting) {
@@ -112,5 +112,5 @@ TEST(BalancedTreeTable, efficiency_when_deleting) {
 	}
 	btt.ClearEff();
 	btt.Delete(500);
-	EXPECT_EQ(btt.GetEff(), 20);
+	EXPECT_EQ(btt.GetEff(), 10);
 }

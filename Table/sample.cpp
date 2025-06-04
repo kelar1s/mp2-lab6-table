@@ -55,7 +55,8 @@ int main() {
 	std::cout << "Tree structure after delete pRoot:" << std::endl;
 	btt.PrintTree(std::cout);*/
 
-	TreeTable<int, int> tt;
+	BalancedTreeTable<int, int> tt;
+
 
 	for (int i = 0; i < 1000; i++) {
 		tt.Insert(Record<int, int>(i, i));

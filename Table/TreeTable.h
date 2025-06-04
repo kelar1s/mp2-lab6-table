@@ -187,14 +187,14 @@ public:
 		return pos >= dataCount;
 	}
 
-	void  PrintRec(std::ostream& os, TreeNode<TKey, TVal>* p) {
+	void PrintRec(std::ostream& os, TreeNode<TKey, TVal>* p) {
 		if (p == nullptr) {
 			return;
 		}
 		for (int i = 0; i < level; i++) {
-			os << " ";
+			os << "  ";
 		}
-		os  << " level " << level << ": " << p->rec.key << endl;
+		os << "level " << level << ": " << p->rec.key << " (bal: " << p->bal << ")" << endl;
 		level++;
 		PrintRec(os, p->pRight);
 		PrintRec(os, p->pLeft);
